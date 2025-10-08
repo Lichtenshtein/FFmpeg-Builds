@@ -26,12 +26,16 @@ LOCAL_ROOT="127.0.0.1:${LOCAL_REG_PORT}/local"
 if [[ -z "$QUICKBUILD" ]]; then
     if grep "FROM.*base.*" "images/base-${TARGET}/Dockerfile" >/dev/null 2>&1; then
         docker buildx --builder ffbuilder build \
+            --build-arg http_proxy=$http_proxy \
+            --build-arg https_proxy=$https_proxy \
             --cache-from=type=local,src=.cache/"${BASE_IMAGE/:/_}" \
             --cache-to=type=local,mode=max,dest=.cache/"${BASE_IMAGE/:/_}" \
             --push --tag "${LOCAL_ROOT}/base:latest" images/base
     fi
 
     docker buildx --builder ffbuilder build \
+        --build-arg http_proxy=$http_proxy \
+        --build-arg https_proxy=$https_proxy \
         --cache-from=type=local,src=.cache/"${TARGET_IMAGE/:/_}" \
         --cache-to=type=local,mode=max,dest=.cache/"${TARGET_IMAGE/:/_}" \
         --push --tag "${LOCAL_ROOT}/base-${TARGET}:latest" \
@@ -44,6 +48,8 @@ fi
 ./generate.sh "$TARGET" "$VARIANT" "${ADDINS[@]}"
 
 docker buildx --builder ffbuilder build \
+    --build-arg http_proxy=$http_proxy \
+    --build-arg https_proxy=$https_proxy \
     --cache-from=type=local,src=.cache/"${IMAGE/:/_}" \
     --cache-to=type=local,mode=max,dest=.cache/"${IMAGE/:/_}" \
     --load --tag "$IMAGE" .
