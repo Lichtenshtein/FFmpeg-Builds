@@ -45,8 +45,14 @@ cat <<EOF >"$BUILD_SCRIPT"
         --extra-ldflags="\$FF_LDFLAGS" --extra-ldexeflags="\$FF_LDEXEFLAGS" \
         --cc="\$CC" --cxx="\$CXX" --ar="\$AR" --ranlib="\$RANLIB" --nm="\$NM" \
         --extra-version="VVCEasy"
-    make -j\$(nproc) V=1
-    make install install-doc
+    if [[ \$TARGET == win* ]]; then
+        export WAT4FF_TRUELD=\${CC}
+        make LD=\${FFBUILD_PREFIX}/wat4ff_ld -j\$(nproc) V=1
+        make LD=\${FFBUILD_PREFIX}/wat4ff_ld install install-doc
+    else
+        make -j\$(nproc) V=1
+        make install install-doc
+    fi
 EOF
 
 [[ -t 1 ]] && TTY_ARG="-t" || TTY_ARG=""
@@ -78,11 +84,11 @@ for bin in ffmpeg ffprobe ffplay; do
 done
 
 if [[ "${TARGET}" == win* ]]; then
-    OUTPUT_FNAME="${BUILD_NAME}.zip"
-    docker run --rm -i $TTY_ARG "${UIDARGS[@]}" -v "${ARTIFACTS_PATH}":/out -v "${PWD}/${BUILD_NAME}":"/${BUILD_NAME}" -w / "$IMAGE" zip -9 -r "/out/${OUTPUT_FNAME}" "$BUILD_NAME"
+    OUTPUT_FNAME="${BUILD_NAME}.7z"
+    docker run --rm -i $TTY_ARG "${UIDARGS[@]}" -v "${ARTIFACTS_PATH}":/out -v "${PWD}/${BUILD_NAME}":"/${BUILD_NAME}" -w / "$IMAGE" 7z a -mx -stl "/out/${OUTPUT_FNAME}" "$BUILD_NAME"
 else
     OUTPUT_FNAME="${BUILD_NAME}.tar.xz"
-    docker run --rm -i $TTY_ARG "${UIDARGS[@]}" -v "${ARTIFACTS_PATH}":/out -v "${PWD}/${BUILD_NAME}":"/${BUILD_NAME}" -w / "$IMAGE" tar cJf "/out/${OUTPUT_FNAME}" "$BUILD_NAME"
+    docker run --rm -i $TTY_ARG "${UIDARGS[@]}" -v "${ARTIFACTS_PATH}":/out -v "${PWD}/${BUILD_NAME}":"/${BUILD_NAME}" -w / "$IMAGE" tar cJf "/out/${OUTPUT_FNAME}" "$BUILD_NAME"fi
 fi
 cd -
 
