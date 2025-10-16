@@ -53,7 +53,6 @@ cat <<EOF >"$BUILD_SCRIPT"
         --extra-version="VVCEasy"
     make -j\$(nproc) V=1
     make install install-doc
-    fi
 EOF
 
 [[ -t 1 ]] && TTY_ARG="-t" || TTY_ARG=""
@@ -94,7 +93,7 @@ if [[ "${TARGET}" == win* ]]; then
     docker run --rm -i $TTY_ARG "${UIDARGS[@]}" -v "${ARTIFACTS_PATH}":/out -v "${PWD}/${BUILD_NAME}":"/${BUILD_NAME}" -w / "$IMAGE" 7z a -mx -stl "/out/${OUTPUT_FNAME}" "$BUILD_NAME"
 else
     OUTPUT_FNAME="${BUILD_NAME}.tar.xz"
-    docker run --rm -i $TTY_ARG "${UIDARGS[@]}" -v "${ARTIFACTS_PATH}":/out -v "${PWD}/${BUILD_NAME}":"/${BUILD_NAME}" -w / "$IMAGE" tar cJf "/out/${OUTPUT_FNAME}" "$BUILD_NAME"fi
+    docker run --rm -i $TTY_ARG "${UIDARGS[@]}" -v "${ARTIFACTS_PATH}":/out -v "${PWD}/${BUILD_NAME}":"/${BUILD_NAME}" -w / "$IMAGE" tar cJf "/out/${OUTPUT_FNAME}" "$BUILD_NAME"
 fi
 cd -
 
