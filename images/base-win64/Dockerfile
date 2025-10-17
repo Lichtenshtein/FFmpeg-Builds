@@ -1,4 +1,4 @@
-ARG GH_REPO=ghcr.io/martineesmaa/ffmpeg-builds
+ARG GH_REPO=ghcr.io/Lichtenshtein/ffmpeg-builds
 FROM $GH_REPO/base:latest
 
 RUN --mount=src=ct-ng-config,dst=/.config \
