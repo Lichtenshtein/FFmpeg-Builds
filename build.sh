@@ -62,7 +62,8 @@ if [ -d "patches/ffmpeg" ]; then
     PATCHES_MOUNT="-v $PWD/patches:/patches"
 fi
 
-docker run --rm -i $TTY_ARG "${UIDARGS[@]}" -v "$PWD/ffbuild":/ffbuild $PATCHES_MOUNT -v "$BUILD_SCRIPT":/build.sh "$IMAGE" bash /build.sh
+# docker run --rm -i $TTY_ARG "${UIDARGS[@]}" -v "$PWD/ffbuild":/ffbuild $PATCHES_MOUNT -v "$BUILD_SCRIPT":/build.sh "$IMAGE" bash /build.sh
+docker run --rm -i $TTY_ARG "${UIDARGS[@]}" -v $PWD/ffbuild:/ffbuild -v "$BUILD_SCRIPT":/build.sh -v $PWD/patches/:/ffbuild/patches  "$IMAGE" bash /build.sh
 
 if [[ -n "$FFBUILD_OUTPUT_DIR" ]]; then
     mkdir -p "$FFBUILD_OUTPUT_DIR"
