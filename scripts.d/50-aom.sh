@@ -1,7 +1,7 @@
 #!/bin/bash
 
-SCRIPT_REPO="https://aomedia.googlesource.com/aom"
-SCRIPT_COMMIT="ce06a9b4b3f35d1756ce98187c260eabe010846c"
+SCRIPT_REPO="https://gitlab.com/damian101/aom-psy101.git"
+SCRIPT_COMMIT="41810e4756a88c5fa665ad670f2fb5f42daf7bf1"
 
 ffbuild_depends() {
     echo base
