@@ -44,6 +44,7 @@ cat <<EOF >"$BUILD_SCRIPT"
 
     ./configure --prefix=/ffbuild/prefix --pkg-config-flags="--static" \$FFBUILD_TARGET_FLAGS \$FF_CONFIGURE \
         --enable-decoder=h264,hevc,av1 \
+        --enable-filter=vpp_amf --enable-filter=sr_amf \
         --enable-swscale \
         --enable-filter=scale \
         --enable-avformat --enable-avcodec --enable-avutil --enable-swresample \
