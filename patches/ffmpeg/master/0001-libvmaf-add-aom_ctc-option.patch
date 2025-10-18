@@ -1,0 +1,49 @@
+From 2611a9a0e3d96ba7d63549c6b57a821046ddd6bd Mon Sep 17 00:00:00 2001
+From: Christopher Degawa <ccom@randomderp.com>
+Date: Mon, 6 Dec 2021 22:48:22 -0600
+Subject: [PATCH] libvmaf: add aom_ctc option
+
+Signed-off-by: Christopher Degawa <ccom@randomderp.com>
+---
+ libavfilter/vf_libvmaf.c | 11 +++++++++++
+ 1 file changed, 11 insertions(+)
+
+diff --git a/libavfilter/vf_libvmaf.c b/libavfilter/vf_libvmaf.c
+index 2586f37d99..ad52bd2a51 100644
+--- a/libavfilter/vf_libvmaf.c
++++ b/libavfilter/vf_libvmaf.c
+@@ -58,6 +58,7 @@ typedef struct LIBVMAFContext {
+     unsigned model_cnt;
+     unsigned frame_cnt;
+     unsigned bpc;
++    int aom_ctc;
+ } LIBVMAFContext;
+ 
+ #define OFFSET(x) offsetof(LIBVMAFContext, x)
+@@ -78,6 +79,7 @@ static const AVOption libvmaf_options[] = {
+     {"enable_conf_interval",  "model='enable_conf_interval=true'.",                     OFFSET(enable_conf_interval), AV_OPT_TYPE_BOOL, {.i64=0}, 0, 1, FLAGS|AV_OPT_FLAG_DEPRECATED},
+     {"model",  "Set the model to be used for computing vmaf.",                          OFFSET(model_cfg), AV_OPT_TYPE_STRING, {.str="version=vmaf_v0.6.1"}, 0, 1, FLAGS},
+     {"feature",  "Set the feature to be used for computing vmaf.",                      OFFSET(feature_cfg), AV_OPT_TYPE_STRING, {.str=NULL}, 0, 1, FLAGS},
++    {"aom_ctc", "Set the options for aom_ctc v1.0",                                     OFFSET(aom_ctc), AV_OPT_TYPE_INT, {.i64=0}, 0, 1, FLAGS},
+     { NULL }
+ };
+ 
+@@ -526,6 +528,15 @@ static av_cold int init(AVFilterContext *ctx)
+     if (err)
+         return err;
+ 
++    if (s->aom_ctc) {
++        av_free(s->model_cfg);
++        av_free(s->feature_cfg);
++        s->model_cfg = av_strdup(
++            "version=vmaf_v0.6.1:name=vmaf|version=vmaf_v0.6.1neg:name=vmaf_neg");
++        s->feature_cfg = av_strdup(
++            "name=psnr:reduced_hbd_peak=true:enable_apsnr=true:min_sse=0.5|"
++            "name=float_ssim:enable_db=true:clip_db=true");
++    }
+     err = parse_models(ctx);
+     if (err)
+         return err;
+-- 
+2.39.2
+
