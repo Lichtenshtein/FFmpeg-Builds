@@ -11,12 +11,20 @@ ffbuild_enabled() {
 
 ffbuild_dockerbuild() {
 
-apt-get install -y autoconf automake build-essential ca-certificates cmake fswebcam g++ git gpsd gpsd-clients libarchive-dev libcairo2-dev libcurl4-openssl-dev libgif-dev libicu-dev libjpeg8-dev libleptonica-dev liblog4cplus-dev libopenjp2-7-dev libpango1.0-dev libpng-dev libprotoc-dev libtensorflow-dev libtiff5-dev libtool libwebp-dev libwebpdemux2 m4 make mpg321 pkg-config python3-opencv software-properties-common unzip wget zlib1g-dev
+apt-get install -y autoconf automake build-essential ca-certificates cmake \
+fswebcam g++ git gpsd gpsd-clients libarchive-dev libcairo2-dev libcurl4-openssl-dev \
+libgif-dev libicu-dev libjpeg8-dev libleptonica-dev liblog4cplus-dev libopenjp2-7-dev \
+libpango1.0-dev libpng-dev libprotoc-dev libtiff5-dev libtool libwebp-dev \
+libwebpdemux2 m4 make mpg321 pkg-config python3-opencv software-properties-common unzip wget zlib1g-dev
 
 apt-get install --no-install-recommends asciidoc docbook-xsl xsltproc
 
 mkdir -p "$FFBUILD_DESTPREFIX"/leptonica/lib
 INSTALL_DIR="$FFBUILD_DESTPREFIX"/leptonica/build
+
+pip install --upgrade pip
+pip install tensorflow
+python3 -c "import tensorflow as tf; print(tf.reduce_sum(tf.random.normal([1000, 1000])))"
 
 git clone --depth 1 https://github.com/zlib-ng/zlib-ng.git
 cd zlib-ng
