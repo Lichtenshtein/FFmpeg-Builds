@@ -21,7 +21,8 @@ ffbuild_dockerbuild() {
         --disable-shared
         --enable-static
 		--enable-slang
-		--enable-conio
+#		--enable-conio
+        --enable-ncurses
 		--disable-imlib2
 		--enable-gl
 		--enable-win32
