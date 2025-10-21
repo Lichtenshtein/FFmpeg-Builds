@@ -1,6 +1,7 @@
 #!/bin/bash
 
 SCRIPT_REPO="https://github.com/chiefjazzdiewltr/libcaca.git"
+SCRIPT_COMMIT="cc351000e1e2a7a78eefc9523599565ebbfda9b2"
 
 ffbuild_enabled() {
     [[ $TARGET == win* ]] || return 1
