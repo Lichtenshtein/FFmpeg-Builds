@@ -4,7 +4,7 @@ SCRIPT_REPO="https://github.com/ImageMagick/bzip2.git"
 
 ffbuild_enabled() {
     [[ $TARGET == win* ]] || return 1
-    return 0
+    return -1
 }
 
 # i have no idea what i'm doing
