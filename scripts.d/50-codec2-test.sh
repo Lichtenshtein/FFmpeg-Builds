@@ -11,8 +11,7 @@ ffbuild_enabled() {
 # i have no idea what i'm doing
 
 ffbuild_dockerbuild() {
-    ./bootstrap
-	
+
 apt-get install libcodec2-dev
 
      local myconf=(
