@@ -21,7 +21,11 @@ ffbuild_dockerbuild() {
         --enable-static
     )
 
-    ./configure "${myconf[@]}"
+    cd codec2
+    mkdir build_linux
+    cd build_linux
+    cmake ..
+  #  ./configure "${myconf[@]}"
     make -j$(nproc)
     make install DESTDIR="$FFBUILD_DESTDIR"
 
