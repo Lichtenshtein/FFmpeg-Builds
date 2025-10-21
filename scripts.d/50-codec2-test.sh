@@ -21,7 +21,7 @@ ffbuild_dockerbuild() {
         --enable-static
     )
 
-    cd codec2
+#    cd codec2
     mkdir build_linux
     cd build_linux
     cmake ..
