@@ -13,6 +13,8 @@ ffbuild_enabled() {
 ffbuild_dockerbuild() {
     ./bootstrap
 
+apt-get install -y libx11 xorgproto libncurses5-dev
+
 # git clone --depth=1 https://github.com/chiefjazzdiewltr/libcaca.git
 
      local myconf=(
@@ -20,13 +22,9 @@ ffbuild_dockerbuild() {
         --host="$FFBUILD_TOOLCHAIN"
         --disable-shared
         --enable-static
-		--enable-slang
-#		--enable-conio
         --enable-ncurses
-		--disable-imlib2
+		--enable-imlib2
 		--enable-gl
-		--enable-win32
-		--enable-network
         --disable-extra-programs
         --disable-csharp 
         --disable-java 
