@@ -4,19 +4,41 @@ SCRIPT_REPO="https://github.com/chiefjazzdiewltr/libcaca.git"
 
 ffbuild_enabled() {
     [[ $TARGET == win* ]] || return 1
-    return -1
+    return 0
 }
 
 # i have no idea what i'm doing
 
 ffbuild_dockerbuild() {
+    ./bootstrap
 
-git clone --depth=1 https://github.com/chiefjazzdiewltr/libcaca.git
-cd libcaca
-./configure --enable-ncurses --enable-slang --enable-conio --disable-imlib2 --enable-gl --enable-win32 --enable-network
-make -j$(nproc)
-make install DESTDIR="$FFBUILD_DESTDIR"
-cd ..
+# git clone --depth=1 https://github.com/chiefjazzdiewltr/libcaca.git
+
+     local myconf=(
+        --prefix="$FFBUILD_PREFIX"
+        --host="$FFBUILD_TOOLCHAIN"
+        --disable-shared
+        --enable-static
+		--enable-slang
+		--enable-conio
+		--disable-imlib2
+		--enable-gl
+		--enable-win32
+		--enable-network
+        --disable-extra-programs
+        --disable-csharp 
+        --disable-java 
+        --disable-cxx 
+        --disable-python 
+        --disable-ruby 
+        --disable-doc 
+        --disable-cocoa 
+#        --disable-ncurses
+    )
+
+    ./configure "${myconf[@]}"
+    make -j$(nproc)
+    make install DESTDIR="$FFBUILD_DESTDIR"
   
 }
 
