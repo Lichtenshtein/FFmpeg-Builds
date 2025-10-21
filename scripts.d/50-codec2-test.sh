@@ -1,6 +1,7 @@
 #!/bin/bash
 
 SCRIPT_REPO="https://github.com/drowe67/codec2.git"
+SCRIPT_COMMIT="96e8a19c2487fd83bd981ce570f257aef42618f9"
 
 ffbuild_enabled() {
     [[ $TARGET == win* ]] || return 1
