@@ -12,7 +12,7 @@ ffbuild_enabled() {
 
 ffbuild_dockerbuild() {
 
-apt-get install libcodec2-dev
+# apt-get install -y libcodec2-dev
 
      local myconf=(
         --prefix="$FFBUILD_PREFIX"
