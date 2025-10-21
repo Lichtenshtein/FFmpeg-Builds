@@ -10,17 +10,20 @@ ffbuild_enabled() {
 # i have no idea what i'm doing
 
 ffbuild_dockerbuild() {
-
+    ./bootstrap
+	
 apt-get install libcodec2-dev
 
-git clone --depth=1 https://github.com/drowe67/codec2.git
-cd codec2
-mkdir build_linux
-cd build_linux
-cmake ..
-make -j$(nproc)
-make install DESTDIR="$FFBUILD_DESTDIR"
-cd ..\..
+     local myconf=(
+        --prefix="$FFBUILD_PREFIX"
+        --host="$FFBUILD_TOOLCHAIN"
+        --disable-shared
+        --enable-static
+    )
+
+    ./configure "${myconf[@]}"
+    make -j$(nproc)
+    make install DESTDIR="$FFBUILD_DESTDIR"
 
 }
 
