@@ -14,7 +14,7 @@ ffbuild_dockerbuild() {
     ./bootstrap
 
 # apt-get install -y libx11 xorgproto libncurses5-dev
-apt-get install -y mesa-common-dev libgl-dev libglu-dev freeglut3-dev pkg-config libtool
+apt-get install -y mesa-common-dev libgl-dev libglu-dev xorg-macros freeglut3-dev pkg-config libtool libx11 xorgproto
 # git clone --depth=1 https://github.com/chiefjazzdiewltr/libcaca.git
 
 	mkdir xorgproto
