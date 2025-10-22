@@ -22,9 +22,9 @@ ffbuild_dockerbuild() {
     )
 
 #    cd codec2
-    mkdir build_linux
-    cd build_linux
-    cmake ..
+ mkdir build && cd build
+    cmake -DCMAKE_TOOLCHAIN_FILE="$FFBUILD_CMAKE_TOOLCHAIN" -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX="$FFBUILD_PREFIX" -DHEADERS_ONLY=ON ..
+#  cmake ..
   #  ./configure "${myconf[@]}"
     make -j$(nproc)
     make install DESTDIR="$FFBUILD_DESTDIR"
