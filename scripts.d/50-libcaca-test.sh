@@ -17,27 +17,36 @@ ffbuild_dockerbuild() {
 apt-get install -y libncurses5-dev mesa-common-dev libgl-dev libglu-dev freeglut3-dev pkg-config libtool
 # git clone --depth=1 https://github.com/chiefjazzdiewltr/libcaca.git
 
+    mkdir freeglut
+    cd freeglut
 	git clone https://github.com/freeglut/freeglut.git
-    mkdir build
-    cd build
+    mkdir freeglut
+    cd freeglut
     cmake .. -DCMAKE_INSTALL_PREFIX="$FFBUILD_PREFIX"
     make -j$(nproc)
     make install DESTDIR="$FFBUILD_DESTDIR"
+    cd ../..
 
+    mkdir xorgproto
+    cd xorgproto
     git clone https://gitlab.freedesktop.org/xorg/proto/xorgproto.git
     cd xorgproto
     ./autogen.sh
     ./configure --prefix=="$FFBUILD_PREFIX" --host="$FFBUILD_TOOLCHAIN" --disable-shared --enable-static
 	make -j$(nproc)
     make install DESTDIR="$FFBUILD_DESTDIR"
+    cd ../..
 
+    mkdir libX11
+    cd libX11
 	git clone https://gitlab.freedesktop.org/xorg/lib/libX11.git
     cd libX11
 	./autogen.sh
 	./configure --prefix="$FFBUILD_PREFIX" --host="$FFBUILD_TOOLCHAIN" --disable-shared --enable-static
 	make -j$(nproc)
     make install DESTDIR="$FFBUILD_DESTDIR"
-	
+	cd ../..
+
      local myconf=(
         --prefix="$FFBUILD_PREFIX"
         --host="$FFBUILD_TOOLCHAIN"
