@@ -21,7 +21,7 @@ apt-get install -y libncurses5-dev mesa-common-dev libgl-dev libglu-dev freeglut
     cd freeglut
 	git clone https://github.com/freeglut/freeglut.git
     cd freeglut
-    cmake .. -DCMAKE_INSTALL_PREFIX="$FFBUILD_PREFIX"
+    cmake -DCMAKE_INSTALL_PREFIX="$FFBUILD_PREFIX"
     make -j$(nproc)
     make install DESTDIR="$FFBUILD_DESTDIR"
     cd ../..
