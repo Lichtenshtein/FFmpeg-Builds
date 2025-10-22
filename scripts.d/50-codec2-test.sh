@@ -9,23 +9,19 @@ ffbuild_enabled() {
 }
 
 # i have no idea what i'm doing
+# no fucking clue what the directories on remote machine are.
+# official instructions don't fit.
+# like a fucking blind game with 50 mins periods per move
+# building. error. building. error. google. building. error. google. building. error. error. error. open software, fuck yeah. 
+# doen't build. then fuck it.
 
 ffbuild_dockerbuild() {
 
 # apt-get install -y libcodec2-dev
 
-     local myconf=(
-        --prefix="$FFBUILD_PREFIX"
-        --host="$FFBUILD_TOOLCHAIN"
-        --disable-shared
-        --enable-static
-    )
-
-#    cd codec2
- mkdir build && cd build
+    mkdir build && cd build
     cmake -DCMAKE_TOOLCHAIN_FILE="$FFBUILD_CMAKE_TOOLCHAIN" -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX="$FFBUILD_PREFIX" -DHEADERS_ONLY=ON ..
 #  cmake ..
-  #  ./configure "${myconf[@]}"
     make -j$(nproc)
     make install DESTDIR="$FFBUILD_DESTDIR"
 
