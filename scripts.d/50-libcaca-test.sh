@@ -17,6 +17,9 @@ ffbuild_dockerbuild() {
 apt-get install -y mesa-common-dev libgl-dev libglu-dev freeglut3-dev pkg-config libtool xutils-dev
 # git clone --depth=1 https://github.com/chiefjazzdiewltr/libcaca.git
 
+	export CC="${FFBUILD_TOOLCHAIN}-gcc"
+	export CROSS="$FFBUILD_CROSS_PREFIX"
+	
 	mkdir xorgproto
     cd xorgproto
     git clone https://gitlab.freedesktop.org/xorg/proto/xorgproto.git
