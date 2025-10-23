@@ -40,6 +40,16 @@ cmake -Bbuild -DCMAKE_BUILD_TYPE=Release -DCMAKE_PREFIX_PATH="$FFBUILD_PREFIX" -
 cmake --build build --config Release --target install
 cd ..
 
+
+# cd ~/ffmpeg_sources && \
+# wget https://www.nasm.us/pub/nasm/releasebuilds/2.14/nasm-2.14.tar.bz2 && \
+# tar xjvf nasm-2.14.tar.bz2 && \
+# cd nasm-2.14 && \
+# ./autogen.sh && \
+# PATH="$HOME/bin:$PATH" ./configure --prefix="$HOME/ffmpeg_build" --bindir="$HOME/bin" && \
+# make && \
+# make install
+
 curl -sSL https://www.nasm.us/pub/nasm/releasebuilds/3.01rc9/nasm-3.01rc9.zip -o ./nasm/nasm-3.01rc9.zip
 cd nasm
 unzip -qq nasm-3.01rc9.zip
