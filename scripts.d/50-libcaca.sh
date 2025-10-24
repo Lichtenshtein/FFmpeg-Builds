@@ -1,12 +1,21 @@
 #!/bin/bash
 
-SCRIPT_REPO="https://github.com/cacalabs/libcaca.git"
-SCRIPT_COMMIT="f42aa68fc798db63b7b2a789ae8cf5b90b57b752"
+# SCRIPT_REPO="https://github.com/cacalabs/libcaca.git"
+# SCRIPT_COMMIT="f42aa68fc798db63b7b2a789ae8cf5b90b57b752"
+
+SCRIPT_REPO="https://github.com/chiefjazzdiewltr/libcaca.git"
+SCRIPT_COMMIT="cc351000e1e2a7a78eefc9523599565ebbfda9b2"
+
+ffbuild_enabled() {
+    [[ $TARGET == win* ]] || return 1
+    return 0
+}
 
 ffbuild_enabled() {
     [[ $TARGET == linux* ]] || return 1
     return 0
 }
+
 
 ffbuild_dockerbuild() {
     ./bootstrap
