@@ -11,7 +11,7 @@ ffbuild_enabled() {
 
 ffbuild_dockerbuild() {
 
-git clone --depth=1 https://github.com/lensfun/lensfun.git
+#git clone --depth=1 https://github.com/lensfun/lensfun.git
 
 cd lensfun
 mkdir build
