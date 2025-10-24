@@ -7,10 +7,10 @@ ffbuild_enabled() {
     return 0
 }
 
-ffbuild_dockerdl() {
-    default_dl "$SELF"
-    to_df "RUN git -C \"$SELF\" fetch --unshallow --filter=blob:none && git -C \"$SELF\" fetch --tags --filter=blob:none"
-}
+#ffbuild_dockerdl() {
+#    default_dl "$SELF"
+#    to_df "RUN git -C \"$SELF\" fetch --unshallow --filter=blob:none && git -C \"$SELF\" fetch --tags --filter=blob:none"
+#}
 
 ffbuild_dockerbuild() {
     cd "$FFBUILD_DLDIR/$SELF"
