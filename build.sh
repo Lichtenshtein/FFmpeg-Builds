@@ -45,16 +45,17 @@ cat <<EOF >"$BUILD_SCRIPT"
     ./configure --prefix=/ffbuild/prefix --pkg-config-flags="--static" \$FFBUILD_TARGET_FLAGS \$FF_CONFIGURE \
         --enable-decoder=h264,hevc,av1 \
         --enable-filter=vpp_amf --enable-filter=sr_amf \
-        --enable-libtesseract  \
+#        --enable-libtesseract  \
         --enable-bzlib \
         --enable-cuda --enable-libnpp --enable-cuvid --enable-nvdec --enable-nvenc --enable-cuda-nvcc \
         --enable-d3d11va --enable-dxva2 --enable-d3d12va \
         --enable-hardcoded-tables \
         --enable-gray \
-        --enable-libcaca \
-        --enable-liblensfun \
-        --enable-libcodec2 \
-        --enable-vapoursynth \
+        --custom-allocator=jemalloc
+#        --enable-libcaca \
+#        --enable-liblensfun \
+#        --enable-libcodec2 \
+#        --enable-vapoursynth \
         --enable-opengl \
         --enable-libmodplug \
         --enable-indev=lavfi \
