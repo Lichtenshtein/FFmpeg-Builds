@@ -4,21 +4,20 @@ SCRIPT_REPO="https://github.com/ImageMagick/bzip2.git"
 
 ffbuild_enabled() {
     [[ $TARGET == win* ]] || return 1
-    return -1
+    return 0
 }
 
 # i have no idea what i'm doing
 
 ffbuild_dockerbuild() {
 
-apt-get install libbz2-dev
-
-git clone --depth=1 https://github.com/ImageMagick/bzip2.git
+# apt-get install libbz2-dev
+# git clone --depth=1 https://github.com/ImageMagick/bzip2.git
 cd bzip2
-./configure
+./configure --prefix=="$FFBUILD_PREFIX" --host="$FFBUILD_TOOLCHAIN" --disable-shared --enable-static
 make -j$(nproc)
 make install DESTDIR="$FFBUILD_DESTDIR"
-cd ..
+# cd ..
   
 }
 
