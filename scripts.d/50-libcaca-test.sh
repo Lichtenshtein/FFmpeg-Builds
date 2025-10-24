@@ -5,15 +5,18 @@ SCRIPT_COMMIT="cc351000e1e2a7a78eefc9523599565ebbfda9b2"
 
 ffbuild_enabled() {
     [[ $TARGET == win* ]] || return 1
-    return 0
+    return -1
 }
 
 # i have no idea what i'm doing
+# nope. 15 tries is enought. doesn't build.
+# configure: error: in `/50-libcaca-test/xorgproto/xorgproto':
+# 27.80 configure: error: cannot run C compiled programs.
+# 27.80 If you meant to cross compile, use `--host'.
 
 ffbuild_dockerbuild() {
     ./bootstrap
 
-# apt-get install -y libx11 xorgproto libncurses5-dev
 apt-get install -y mesa-common-dev libgl-dev libglu-dev freeglut3-dev pkg-config libtool xutils-dev
 # git clone --depth=1 https://github.com/chiefjazzdiewltr/libcaca.git
 
