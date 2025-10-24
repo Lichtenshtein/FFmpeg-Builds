@@ -5,10 +5,11 @@ SCRIPT_COMMIT="8707cbfdaf2991404e4473b16adf4f7b286431d3"
 
 ffbuild_enabled() {
     [[ $TARGET == win* ]] || return 1
-    return 0
+    return -1
 }
 
 # i have no idea what i'm doing
+# vapourfuck. nah.
 
 ffbuild_dockerbuild() {
 
