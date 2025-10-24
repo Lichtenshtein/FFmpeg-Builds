@@ -13,7 +13,7 @@ ffbuild_dockerbuild() {
 
 # apt-get install libbz2-dev
 # git clone --depth=1 https://github.com/ImageMagick/bzip2.git
-# cd bzip2
+cd bzip2
 ./configure --prefix=="$FFBUILD_PREFIX" --host="$FFBUILD_TOOLCHAIN" --disable-shared --enable-static
 make -j$(nproc)
 make install DESTDIR="$FFBUILD_DESTDIR"
