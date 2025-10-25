@@ -13,7 +13,7 @@ ffbuild_enabled() {
 #}
 
 ffbuild_dockerbuild() {
-    cd "$FFBUILD_DLDIR/$SELF"
+#    cd "$FFBUILD_DLDIR/$SELF"
 
     local myconf=(
         --prefix="$FFBUILD_PREFIX"
