@@ -1,6 +1,7 @@
 #!/bin/bash
 
 SCRIPT_REPO="https://github.com/lensfun/lensfun.git"
+SCRIPT_COMMIT="ef7a8498b4b010cd927cf773a710489dcbb5b312"
 
 ffbuild_enabled() {
     [[ $TARGET == win* ]] || return 1
@@ -24,9 +25,9 @@ cd ../..
 }
 
 ffbuild_configure() {
-    echo --enable-lensfun
+    echo --enable-liblensfun
 }
 
 ffbuild_unconfigure() {
-    echo --disable-lensfun
+    echo --disable-liblensfun
 }
