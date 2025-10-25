@@ -1,7 +1,7 @@
 #!/bin/bash
 
 SCRIPT_REPO="https://github.com/fraunhoferhhi/vvenc.git"
-SCRIPT_COMMIT="66e1fb0eb11fd9b681fa492f9179ec5e3a3b53e3"
+SCRIPT_COMMIT="667bb8ca34f50e22aae3b8a74f19be9547e4742f"
 
 ffbuild_enabled() {
     [[ $TARGET == winarm* ]] && return -1
@@ -24,6 +24,9 @@ ffbuild_dockerbuild() {
         if [[ "$CC" != *clang* ]]; then
             export CFLAGS="$CFLAGS -fpermissive -Wno-error=uninitialized -Wno-error=maybe-uninitialized"
             export CXXFLAGS="$CXXFLAGS -fpermissive -Wno-error=uninitialized -Wno-error=maybe-uninitialized"
+#        else
+#            export CFLAGS="$CFLAGS -Wno-error=deprecated-literal-operator"
+#            export CXXFLAGS="$CXXFLAGS -Wno-error=deprecated-literal-operator"
         fi
     fi
 
