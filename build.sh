@@ -59,6 +59,7 @@ cat <<EOF >"$BUILD_SCRIPT"
         --enable-opengl \
         --enable-libmodplug \
         --enable-indev=lavfi \
+        --enable-filter=eq \
         --enable-filter=scale \
         --enable-avformat --enable-avcodec --enable-avutil --enable-swresample \
         --extra-cflags="\$FF_CFLAGS" --extra-cxxflags="\$FF_CXXFLAGS" --extra-libs="\$FF_LIBS" \
