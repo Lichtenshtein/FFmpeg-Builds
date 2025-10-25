@@ -4,7 +4,7 @@ SCRIPT_REPO="https://github.com/jemalloc/jemalloc.git"
 SCRIPT_COMMIT="da66aa391f853ccf2300845b3873cc8f1cf48f2d"
 
 ffbuild_enabled() {
-    return 0
+    return -1
 }
 
 #ffbuild_dockerdl() {
