@@ -55,7 +55,7 @@ cat <<EOF >"$BUILD_SCRIPT"
 #        --enable-liblensfun \
 #        --enable-libcodec2 \
 #        --enable-vapoursynth \
-        --enable-libmodplug \
+#        --enable-libmodplug \
         --enable-libgme \
 #        --enable-libtesseract  \
         --enable-lcms2
