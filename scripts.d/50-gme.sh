@@ -1,7 +1,10 @@
 #!/bin/bash
 
-SCRIPT_REPO="https://github.com/libgme/game-music-emu.git"
-SCRIPT_COMMIT="bd7b3604dee43084aae0a2b4457ba7bf48554030"
+#SCRIPT_REPO="https://github.com/libgme/game-music-emu.git"
+#SCRIPT_COMMIT="bd7b3604dee43084aae0a2b4457ba7bf48554030"
+
+SCRIPT_REPO="https://github.com/myQwil/game-music-emu.git"
+SCRIPT_COMMIT="c6b70bf66fc681f9450eec64fc4d6e19d753662a"
 
 ffbuild_enabled() {
     return 0
