@@ -43,15 +43,12 @@ cat <<EOF >"$BUILD_SCRIPT"
     fi
 
     ./configure --prefix=/ffbuild/prefix --pkg-config-flags="--static" \$FFBUILD_TARGET_FLAGS \$FF_CONFIGURE \
-        --enable-decoder=h264,hevc,av1 \
         --enable-filter=vpp_amf --enable-filter=sr_amf \
         --enable-d3d11va --enable-dxva2 --enable-d3d12va \
         --enable-opengl \
         --enable-hardcoded-tables \
         --enable-gray \
         --enable-indev=lavfi \
-        --enable-filter=eq \
-        --enable-filter=scale \
         --enable-avformat --enable-avcodec --enable-avutil --enable-swresample \
         --extra-cflags="\$FF_CFLAGS" --extra-cxxflags="\$FF_CXXFLAGS" --extra-libs="\$FF_LIBS" \
         --extra-ldflags="\$FF_LDFLAGS" --extra-ldexeflags="\$FF_LDEXEFLAGS" \
