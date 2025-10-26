@@ -9,13 +9,6 @@ ffbuild_enabled() {
 }
 
 # i have no idea what i'm doing
-# no fucking clue what the directories on remote machine are.
-# official instructions don't fit.
-# like a fucking blind game with 50 mins periods per move
-# building. error. building. error. google. building. error. google. building. error. error. error. open software, build your dream. fuck you. 
-# doesn't build. then fuck it.
-# ok. one last time. or two. or fuck you.
-# yeah. error this, error that. never trust the penguins.
 # 56 14.53 [ 20%] Performing install step for 'codec2_native'
 # 56 14.55 Error copying file "/50-codec2-test/build/src/codec2_native/src/generate_codebook" to "/50-codec2-test/build/src".
 # 56 14.55 make[2]: *** [src/CMakeFiles/codec2_native.dir/build.make:103: src/codec2_native-prefix/src/codec2_native-stamp/codec2_native-install] Error 1
