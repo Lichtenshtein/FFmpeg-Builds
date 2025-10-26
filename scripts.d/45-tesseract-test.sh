@@ -111,7 +111,7 @@ cmake -Bbuild -DCMAKE_BUILD_TYPE=Release -DCMAKE_PREFIX_PATH="$FFBUILD_PREFIX" -
 cmake --build build --config Release --target install
 cd ..
 
-git clone --depth=1 https://github.com/tesseract-ocr/tesseract.git
+# git clone --depth=1 https://github.com/tesseract-ocr/tesseract.git
 # git clone https://github.com/tesseract-ocr/tessdata.git tesseract-ocr.tessdata
 cd tesseract
 ./autogen.sh
