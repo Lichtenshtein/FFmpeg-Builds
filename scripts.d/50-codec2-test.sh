@@ -5,7 +5,7 @@ SCRIPT_COMMIT="96e8a19c2487fd83bd981ce570f257aef42618f9"
 
 ffbuild_enabled() {
     [[ $TARGET == win* ]] || return 1
-    return -1
+    return 0
 }
 
 # i have no idea what i'm doing
@@ -17,14 +17,13 @@ ffbuild_enabled() {
 
 ffbuild_dockerbuild() {
 
-# apt-get install -y libcodec2-dev
+    mkdir build
+    cd build
 
-    mkdir build && cd build
-    cmake -DCMAKE_TOOLCHAIN_FILE="$FFBUILD_CMAKE_TOOLCHAIN" -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX="$FFBUILD_PREFIX" -DHEADERS_ONLY=ON ..
-#  cmake ..
+    cmake -DCMAKE_TOOLCHAIN_FILE="$FFBUILD_CMAKE_TOOLCHAIN" -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX="$FFBUILD_PREFIX" -DBUILD_SHARED_LIBS=NO ..
     make -j$(nproc)
     make install DESTDIR="$FFBUILD_DESTDIR"
-
+    
 }
 
 ffbuild_configure() {
