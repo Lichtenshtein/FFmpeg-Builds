@@ -11,6 +11,17 @@ ffbuild_enabled() {
 # i have no idea what i'm doing
 # line 32: ./configure: No such file or directory
 # no. stop trying. you won't succeed. you'll never build anything yourself with these scripts.
+# right. fuck me.
+# 7.727 /opt/ct-ng/lib/gcc/x86_64-w64-mingw32/13.2.0/../../../../x86_64-w64-mingw32/bin/ld: bzip2.o:bzip2.c:(.text+0xd39): undefined reference to `__imp_BZ2_bzReadClose'
+# 7.727 /opt/ct-ng/lib/gcc/x86_64-w64-mingw32/13.2.0/../../../../x86_64-w64-mingw32/bin/ld: bzip2.o:bzip2.c:(.text+0xf37): undefined reference to `__imp_BZ2_bzReadOpen'
+# 7.727 /opt/ct-ng/lib/gcc/x86_64-w64-mingw32/13.2.0/../../../../x86_64-w64-mingw32/bin/ld: bzip2.o:bzip2.c:(.text+0xf8d): undefined reference to `__imp_BZ2_bzRead'
+# 7.727 /opt/ct-ng/lib/gcc/x86_64-w64-mingw32/13.2.0/../../../../x86_64-w64-mingw32/bin/ld: bzip2.o:bzip2.c:(.text+0xfdd): undefined reference to `__imp_BZ2_bzReadGetUnused'
+# 7.727 /opt/ct-ng/lib/gcc/x86_64-w64-mingw32/13.2.0/../../../../x86_64-w64-mingw32/bin/ld: bzip2.o:bzip2.c:(.text+0x105b): undefined reference to `__imp_BZ2_bzReadClose'
+# 7.727 /opt/ct-ng/lib/gcc/x86_64-w64-mingw32/13.2.0/../../../../x86_64-w64-mingw32/bin/ld: bzip2.o:bzip2.c:(.text+0x1132): undefined reference to `__imp_BZ2_bzReadClose'
+# 7.727 /opt/ct-ng/lib/gcc/x86_64-w64-mingw32/13.2.0/../../../../x86_64-w64-mingw32/bin/ld: bzip2.o:bzip2.c:(.text+0x32d0): undefined reference to `__imp_BZ2_bzlibVersion'
+# 7.728 /opt/ct-ng/lib/gcc/x86_64-w64-mingw32/13.2.0/../../../../x86_64-w64-mingw32/bin/ld: bzip2.o:bzip2.c:(.text+0x3316): undefined reference to `__imp_BZ2_bzlibVersion'
+# 7.750 collect2: error: ld returned 1 exit status
+# 7.752 make: *** [Makefile:40: bzip2] Error 1
 
 ffbuild_dockerbuild() {
 
