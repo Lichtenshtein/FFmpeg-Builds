@@ -9,14 +9,15 @@ ffbuild_enabled() {
 }
 
 # i have no idea what i'm doing
+# 0.152 /stage.sh: line 32: ./configure: No such file or directory
 
 ffbuild_dockerbuild() {
 
-    local myconf=(
-        --prefix="$FFBUILD_PREFIX"
-        --disable-shared
-        --enable-static
-    )
+#    local myconf=(
+#        --prefix="$FFBUILD_PREFIX"
+#        --disable-shared
+#        --enable-static
+#    )
 
     if [[ $TARGET == win* || $TARGET == linux* ]]; then
         myconf+=(
@@ -29,9 +30,17 @@ ffbuild_dockerbuild() {
 
     export CPPFLAGS="$CPPFLAGS -I$FFBUILD_PREFIX/include"
 
-    ./configure "${myconf[@]}"
+    mkdir build
+    cd build
+
+    cmake -DCMAKE_TOOLCHAIN_FILE="$FFBUILD_CMAKE_TOOLCHAIN" -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX="$FFBUILD_PREFIX" -DBUILD_SHARED_LIBS=NO ..
     make -j$(nproc)
     make install DESTDIR="$FFBUILD_DESTDIR"
+
+
+#    ./configure "${myconf[@]}"
+#    make -j$(nproc)
+#    make install DESTDIR="$FFBUILD_DESTDIR"
 
 }
 
