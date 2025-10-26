@@ -9,14 +9,16 @@ ffbuild_enabled() {
 }
 
 # i have no idea what i'm doing
+# line 32: ./configure: No such file or directory
+# no. stop trying. you won't succeed. you'll never build anything yourself with these scripts.
 
 ffbuild_dockerbuild() {
 
-    local myconf=(
-        --prefix="$FFBUILD_PREFIX"
-        --disable-shared
-        --enable-static
-    )
+#    local myconf=(
+#        --prefix="$FFBUILD_PREFIX"
+#        --disable-shared
+#        --enable-static
+#    )
 
     if [[ $TARGET == win* || $TARGET == linux* ]]; then
         myconf+=(
@@ -29,7 +31,7 @@ ffbuild_dockerbuild() {
 
     export CPPFLAGS="$CPPFLAGS -I$FFBUILD_PREFIX/include"
 
-    ./configure "${myconf[@]}"
+#    ./configure "${myconf[@]}"
     make -j$(nproc)
     make install DESTDIR="$FFBUILD_DESTDIR"
   
