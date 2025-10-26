@@ -59,7 +59,7 @@ cat <<EOF >"$BUILD_SCRIPT"
         --enable-libgme \
 #        --enable-libtesseract  \
         --enable-lcms2
-        --enable-bzlib \
+#        --enable-bzlib \
         --enable-libdvdnav --enable-libdvdread \
         --enable-indev=lavfi \
         --enable-filter=eq \
