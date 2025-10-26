@@ -10,6 +10,9 @@ ffbuild_enabled() {
 ffbuild_dockerbuild() {
     ./autogen.sh
 
+    # fuck it let it be here
+    apt-get install -y libgme-dev
+    
     local myconf=(
         --prefix="$FFBUILD_PREFIX"
         --disable-shared
