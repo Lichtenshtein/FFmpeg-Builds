@@ -1,25 +1,23 @@
 #!/bin/bash
 
-SCRIPT_REPO="https://github.com/jemalloc/jemalloc.git"
-SCRIPT_COMMIT="da66aa391f853ccf2300845b3873cc8f1cf48f2d"
+SCRIPT_REPO="https://github.com/facebook/jemalloc.git"
+SCRIPT_COMMIT="6ced85a8e5d73e882aa999a1fbc95b9312461804"
 
 ffbuild_enabled() {
-    return -1
+    [[ $TARGET == win* ]] || return 1
+    return 0
 }
 
-#ffbuild_dockerdl() {
-#    default_dl "$SELF"
-#    to_df "RUN git -C \"$SELF\" fetch --unshallow --filter=blob:none && git -C \"$SELF\" fetch --tags --filter=blob:none"
-#}
 
 ffbuild_dockerbuild() {
-#    cd "$FFBUILD_DLDIR/$SELF"
 
     local myconf=(
         --prefix="$FFBUILD_PREFIX"
-        --with-jemalloc-prefix=je_
         --disable-shared
         --enable-static
+        --disable-initial-exec-tls
+        --with-lg-quantum=3
+        --enable-autogen
     )
 
     if [[ $TARGET == win* || $TARGET == linux* ]]; then
@@ -31,25 +29,12 @@ ffbuild_dockerbuild() {
         return -1
     fi
 
-    echo "Libs.private: @LIBS@" >> jemalloc.pc.in
-    echo "jemalloc_prefix=@JEMALLOC_PREFIX@" >> jemalloc.pc.in
-
-    CFLAGS="${CFLAGS/-fPIC/}"
-    CFLAGS="${CFLAGS/-DPIC/}"
-    export CFLAGS="${CFLAGS/-fno-semantic-interposition/} -fPIE"
-    CXXFLAGS="${CXXFLAGS/-fPIC/}"
-    CXXFLAGS="${CXXFLAGS/-DPIC/}"
-    export CXXFLAGS="${CXXFLAGS/-fno-semantic-interposition/} -fPIE"
+    export CPPFLAGS="$CPPFLAGS -I$FFBUILD_PREFIX/include"
 
     ./autogen.sh "${myconf[@]}"
-    make -j$(nproc) build_lib_static
-    make install_include install_lib_static install_lib_pc
+    make -j$(nproc)
+    make install DESTDIR="$FFBUILD_DESTDIR"
 
-    if [[ $VARIANT == *shared* ]]; then
-        mv "$FFBUILD_PREFIX"/lib/libjemalloc{_pic,}.a
-    else
-        rm "$FFBUILD_PREFIX"/lib/libjemalloc_pic.a
-    fi
 }
 
 ffbuild_configure() {
