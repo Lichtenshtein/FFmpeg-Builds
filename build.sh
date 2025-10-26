@@ -53,7 +53,7 @@ cat <<EOF >"$BUILD_SCRIPT"
         --custom-allocator=jemalloc
 #        --enable-libcaca \
 #        --enable-liblensfun \
-        --enable-libcodec2 \
+#        --enable-libcodec2 \
 #        --enable-vapoursynth \
         --enable-libmodplug \
         --enable-libgme \
