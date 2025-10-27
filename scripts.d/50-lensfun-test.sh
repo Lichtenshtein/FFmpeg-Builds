@@ -5,22 +5,29 @@ SCRIPT_COMMIT="ef7a8498b4b010cd927cf773a710489dcbb5b312"
 
 ffbuild_enabled() {
     [[ $TARGET == win* ]] || return 1
-    return -1
+    return 0
 }
 
 # i have no idea what i'm doing
 
 ffbuild_dockerbuild() {
 
-#git clone --depth=1 https://github.com/lensfun/lensfun.git
+    if [[ $TARGET == win* || $TARGET == linux* ]]; then
+        myconf+=(
+            --host="$FFBUILD_TOOLCHAIN"
+        )
+    else
+        echo "Unknown target"
+        return -1
+    fi
 
-cd lensfun
-mkdir build
-cd build
-cmake ../
-make -j$(nproc)
-make install DESTDIR="$FFBUILD_DESTDIR"
-cd ../..
+    export CPPFLAGS="$CPPFLAGS -I$FFBUILD_PREFIX/include"
+
+    mkdir build
+    cd build
+    cmake -DCMAKE_TOOLCHAIN_FILE="$FFBUILD_CMAKE_TOOLCHAIN" -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX="$FFBUILD_PREFIX" -DBUILD_SHARED_LIBS=NO ..
+    make -j$(nproc)
+    make install DESTDIR="$FFBUILD_DESTDIR"
 
 }
 
