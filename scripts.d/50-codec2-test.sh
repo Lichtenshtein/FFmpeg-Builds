@@ -1,11 +1,20 @@
 #!/bin/bash
 
-SCRIPT_REPO="https://github.com/drowe67/codec2.git"
-SCRIPT_COMMIT="96e8a19c2487fd83bd981ce570f257aef42618f9"
+# SCRIPT_REPO="https://github.com/drowe67/codec2.git"
+# SCRIPT_COMMIT="96e8a19c2487fd83bd981ce570f257aef42618f9"
+
+# fork repo 1
+SCRIPT_REPO="https://github.com/zups/codec2.git"
+SCRIPT_COMMIT="371c82ae557f1b033cf4b625be435bb4b88ef70b"
+
+# fork repo 2
+# SCRIPT_REPO="https://github.com/rhythmcache/codec2.git"
+# SCRIPT_COMMIT="6e0a0e09c065aa5401eb9c30d724240fffe890f1"
+
 
 ffbuild_enabled() {
     [[ $TARGET == win* ]] || return 1
-    return -1
+    return 0
 }
 
 # i have no idea what i'm doing
@@ -35,7 +44,7 @@ ffbuild_dockerbuild() {
     mkdir build
     cd build
 
-    cmake -DCMAKE_TOOLCHAIN_FILE="$FFBUILD_CMAKE_TOOLCHAIN" -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX="$FFBUILD_PREFIX" -DBUILD_SHARED_LIBS=NO ..
+    cmake -DCMAKE_TOOLCHAIN_FILE="$FFBUILD_CMAKE_TOOLCHAIN" -DCMAKE_BUILD_TYPE=Release -DUNITTEST=FALSE -DGENERATE_CODEBOOK=/50-codec2-test/build/src/codec2_native/src/generate_codebook -DCMAKE_INSTALL_PREFIX="$FFBUILD_PREFIX" -DBUILD_SHARED_LIBS=NO ..
     make -j$(nproc)
     make install DESTDIR="$FFBUILD_DESTDIR"
     
