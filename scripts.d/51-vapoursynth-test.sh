@@ -12,10 +12,15 @@ ffbuild_enabled() {
 
 ffbuild_dockerbuild() {
 
-apt-get install -y libzimg-dev devscripts equivs yasm intltool
-apt-get install -y libavutil-dev libavcodec-dev libswscale-dev
+# wtf it this?
 # apt-get install -y openssl cmake libevent-dev libjpeg-dev libgif-dev libpng-dev libwebp-dev libmagickcore5 libmagickwand5 libmemcached-dev
-apt-get install -y python3-dev Cython
+
+# apt-get install -y devscripts equivs 
+
+apt-get install -y libzimg-dev intltool \
+libavutil-dev libavcodec-dev libswscale-dev \
+python3-dev Cython
+
 # pip3 install Cython
 
     local myconf=(
