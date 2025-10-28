@@ -21,7 +21,11 @@ ffbuild_enabled() {
 ffbuild_dockerbuild() {
 
 #    apt-get install -y libgtk-3-dev
-     apt-get install -y libglib2.0-dev
+#    apt-get install -y libglib2.0-dev
+
+dpkg -L libglib2.0-dev
+ldconfig -p | grep libglib
+ldconfig -p | grep glib
 
     if [[ $TARGET == win* || $TARGET == linux* ]]; then
         myconf+=(
@@ -33,6 +37,8 @@ ffbuild_dockerbuild() {
     fi
 
     export CPPFLAGS="$CPPFLAGS -I$FFBUILD_PREFIX/include"
+
+# cmake -DGLIB2_ROOT=/path/to/your/glib2/installation ..
 
     mkdir build
     cd build
