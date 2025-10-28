@@ -3,6 +3,14 @@
 SCRIPT_REPO="https://github.com/lensfun/lensfun.git"
 SCRIPT_COMMIT="ef7a8498b4b010cd927cf773a710489dcbb5b312"
 
+# #229 0.875 -- Looking for include file endian.h - not found
+# #229 0.882 -- Found PkgConfig: /usr/bin/pkg-config (found version "1.8.1") 
+# #229 0.883 -- Checking for one of the modules 'glib-2.0'
+# #229 0.899 CMake Error at cmake/modules/FindGLIB2.cmake:69 (MESSAGE):
+# #229 0.899   Could not find glib2
+# #229 0.899 Call Stack (most recent call first):
+# #229 0.899   CMakeLists.txt:116 (FIND_PACKAGE)
+
 ffbuild_enabled() {
     [[ $TARGET == win* ]] || return 1
     return 0
@@ -13,6 +21,7 @@ ffbuild_enabled() {
 ffbuild_dockerbuild() {
 
 #    apt-get install -y libgtk-3-dev
+     apt-get install -y libglib2.0-dev
 
     if [[ $TARGET == win* || $TARGET == linux* ]]; then
         myconf+=(
