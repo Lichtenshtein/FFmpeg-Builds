@@ -13,7 +13,7 @@ SCRIPT_COMMIT="60b39ece3464ba6a730e5e7f5f8221e89c9a72c9"
 
 ffbuild_enabled() {
     [[ $TARGET == win* ]] || return 1
-    return 0
+    return -1
 }
 
 # i have no idea what i'm doing
