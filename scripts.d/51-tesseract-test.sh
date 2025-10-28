@@ -12,121 +12,40 @@ ffbuild_enabled() {
 
 ffbuild_dockerbuild() {
 
-apt-get install -y autoconf automake build-essential ca-certificates cmake \
-fswebcam g++ git gpsd gpsd-clients libarchive-dev libcairo2-dev libcurl4-openssl-dev \
-libgif-dev libicu-dev libjpeg8-dev libleptonica-dev liblog4cplus-dev libopenjp2-7-dev \
-libpango1.0-dev libpng-dev libprotoc-dev libtiff5-dev libtool libwebp-dev \
-libwebpdemux2 m4 make mpg321 pkg-config python3-opencv software-properties-common unzip wget zlib1g-dev
+# main
+apt-get install -y libleptonica-dev \
+libpng-dev \
+libjpeg8-dev \
+libtiff5-dev \
+libwebpdemux2 libwebp-dev \
+libopenjp2-7-dev \
+libgif-dev \
+libarchive-dev libcurl4-openssl-dev
 
-apt-get install -y --no-install-recommends asciidoc docbook-xsl xsltproc
+# fswebcam gpsd gpsd-clients libarchive-dev libcurl4-openssl-dev \
+# libgif-dev libjpeg8-dev  liblog4cplus-dev libopenjp2-7-dev \
+# libpng-dev  libtiff5-dev libwebp-dev \
+# libwebpdemux2 mpg321 pkg-config python3-opencv software-properties-common
 
-# mkdir -p "$FFBUILD_DESTPREFIX"/leptonica/lib
-# INSTALL_DIR="$FFBUILD_DESTPREFIX"/leptonica/build
-
-pip install --upgrade pip
+# tensflow
+apt-get install -y libprotoc-dev \
 pip install tensorflow
 
-git clone --depth 1 https://github.com/zlib-ng/zlib-ng.git
-cd zlib-ng
-cmake -Bbuild -DCMAKE_PREFIX_PATH="$FFBUILD_PREFIX" -DCMAKE_TOOLCHAIN_FILE="$FFBUILD_CMAKE_TOOLCHAIN" -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX="$FFBUILD_PREFIX" -DBUILD_SHARED_LIBS=OFF -DZLIB_COMPAT=ON -DZLIB_ENABLE_TESTS=OFF -DINSTALL_UTILS=OFF
-cmake --build build --config Release --target install
-cd ..
 
-curl -sSL https://download.sourceforge.net/libpng/lpng1640.zip -o lpng1640.zip
-unzip -qq lpng1640.zip
-cd lpng1640
-cmake -Bbuild -DCMAKE_BUILD_TYPE=Release -DCMAKE_TOOLCHAIN_FILE="$FFBUILD_CMAKE_TOOLCHAIN" -DCMAKE_PREFIX_PATH="$FFBUILD_PREFIX" -DCMAKE_INSTALL_PREFIX="$FFBUILD_PREFIX" -DPNG_TESTS=OFF -DPNG_SHARED=OFF
-cmake --build build --config Release --target install
-cd ..
+export TESSDATA_PREFIX=".\tessdata"
+# export TESSDATA_PREFIX="./tessdata
 
+# costraited 'release build' flags
+# --disable-openmp --disable-shared 'CXXFLAGS=-g -O2 -fno-math-errno -Wall -Wextra -Wpedantic'
 
-# cd ~/ffmpeg_sources && \
-# wget https://www.nasm.us/pub/nasm/releasebuilds/2.14/nasm-2.14.tar.bz2 && \
-# tar xjvf nasm-2.14.tar.bz2 && \
-# cd nasm-2.14 && \
-# ./autogen.sh && \
-# PATH="$HOME/bin:$PATH" ./configure --prefix="$HOME/ffmpeg_build" --bindir="$HOME/bin" && \
-# make && \
-# make install
-
-curl -sSL https://www.nasm.us/pub/nasm/releasebuilds/3.01rc9/nasm-3.01rc9.zip -o ./nasm-3.01rc9.zip
-unzip -qq nasm-3.01rc9.zip
-cd nasm-3.01rc9
-cmake -Bbuild -DCMAKE_BUILD_TYPE=Release -DCMAKE_TOOLCHAIN_FILE="$FFBUILD_CMAKE_TOOLCHAIN" -DCMAKE_PREFIX_PATH="$FFBUILD_PREFIX" -DCMAKE_INSTALL_PREFIX="$FFBUILD_PREFIX" -DPNG_TESTS=OFF -DPNG_SHARED=OFF
-cmake --build build --config Release --target install
-cd ..
-
-git clone --depth 1 https://github.com/libjpeg-turbo/libjpeg-turbo.git
-cd libjpeg-turbo
-cmake -Bbuild -DCMAKE_BUILD_TYPE=Release -DCMAKE_TOOLCHAIN_FILE="$FFBUILD_CMAKE_TOOLCHAIN" -DCMAKE_PREFIX_PATH="$FFBUILD_PREFIX" -DCMAKE_INSTALL_PREFIX="$FFBUILD_PREFIX" -DWITH_TURBOJPEG=OFF
-cmake --build build --config Release --target install
-cd ..
-
-git clone --depth 1 https://gitlab.com/libtiff/libtiff.git
-cd libtiff
-cmake -Bbuild -DCMAKE_BUILD_TYPE=Release -DCMAKE_TOOLCHAIN_FILE="$FFBUILD_CMAKE_TOOLCHAIN" -DCMAKE_PREFIX_PATH="$FFBUILD_PREFIX" -DCMAKE_INSTALL_PREFIX="$FFBUILD_PREFIX" -Dtiff-tools=OFF -Dtiff-tests=OFF -Dtiff-contrib=OFF -Dtiff-docs=OFF
-cmake --build build --config Release --target install
-cd ..
-
-git clone --depth 1 https://github.com/zdenop/jbigkit.git
-cd jbigkit
-cmake -Bbuild -DCMAKE_PREFIX_PATH="$FFBUILD_PREFIX" -DCMAKE_TOOLCHAIN_FILE="$FFBUILD_CMAKE_TOOLCHAIN" -DCMAKE_INSTALL_PREFIX="$FFBUILD_PREFIX" -DBUILD_PROGRAMS=OFF -DBUILD_TOOLS=OFF -DCMAKE_WARN_DEPRECATED=OFF
-cmake --build build --config Release --target install
-cd ..
-
-git clone --depth 1 https://github.com/facebook/zstd.git
-cd zstd/build/cmake
-cmake -Bbuild -DCMAKE_PREFIX_PATH="$FFBUILD_PREFIX" -DCMAKE_TOOLCHAIN_FILE="$FFBUILD_CMAKE_TOOLCHAIN" -DCMAKE_INSTALL_PREFIX="$FFBUILD_PREFIX" 
-cmake --build build --config Release --target install
-cd ../../..
-
-git clone --depth 1 https://github.com/tukaani-project/xz.git
-cd xz
-cmake -Bbuild -DCMAKE_PREFIX_PATH="$FFBUILD_PREFIX" -DCMAKE_TOOLCHAIN_FILE="$FFBUILD_CMAKE_TOOLCHAIN" -DCMAKE_INSTALL_PREFIX="$FFBUILD_PREFIX" -DBUILD_TESTING=OFF -DBUILD_SHARED_LIBS=ON
-cmake --build build --config Release --target install
-cd ..
-
-git clone --depth 1 https://github.com/xbmc/giflib.git
-cd giflib
-cmake -Bbuild -DCMAKE_PREFIX_PATH="$FFBUILD_PREFIX" -DCMAKE_TOOLCHAIN_FILE="$FFBUILD_CMAKE_TOOLCHAIN" -DCMAKE_INSTALL_PREFIX="$FFBUILD_PREFIX" -DBUILD_TESTING=OFF -DBUILD_SHARED_LIBS=ON
-cmake --build build --config Release --target install
-cd ..
-
-git clone --depth 1 https://chromium.googlesource.com/webm/libwebp
-cd libwebp
-cmake -Bbuild -DCMAKE_BUILD_TYPE=Release -DCMAKE_PREFIX_PATH="$FFBUILD_PREFIX" -DCMAKE_TOOLCHAIN_FILE="$FFBUILD_CMAKE_TOOLCHAIN" -DCMAKE_INSTALL_PREFIX="$FFBUILD_PREFIX" -DWEBP_BUILD_WEBP_JS=OFF -DWEBP_BUILD_ANIM_UTILS=OFF -DWEBP_BUILD_CWEBP=OFF -DWEBP_BUILD_DWEBP=OFF -DWEBP_BUILD_GIF2WEBP=OFF -DWEBP_BUILD_IMG2WEBP=OFF -DWEBP_BUILD_VWEBP=OFF -DWEBP_BUILD_WEBPMUX=OFF -DWEBP_BUILD_EXTRAS=OFF -DWEBP_BUILD_WEBP_JS=OFF
-cmake --build build --config Release --target install
-cd ..
-
-git clone --depth 1 https://github.com/uclouvain/openjpeg.git
-cd openjpeg
-cmake -Bbuild -DCMAKE_BUILD_TYPE=Release -DCMAKE_PREFIX_PATH="$FFBUILD_PREFIX" -DCMAKE_TOOLCHAIN_FILE="$FFBUILD_CMAKE_TOOLCHAIN" -DCMAKE_INSTALL_PREFIX="$FFBUILD_PREFIX" -DBUILD_TESTING=OFF -DBUILD_SHARED_LIBS=ON
-cmake --build build --config Release --target install
-cd ..
-
-git clone --depth=1 https://github.com/DanBloomberg/leptonica.git
-cd leptonica
-cmake -Bbuild -DCMAKE_BUILD_TYPE=Release -DCMAKE_PREFIX_PATH="$FFBUILD_PREFIX" -DCMAKE_TOOLCHAIN_FILE="$FFBUILD_CMAKE_TOOLCHAIN" -DCMAKE_INSTALL_PREFIX="$FFBUILD_PREFIX" -DSW_BUILD=OFF -DBUILD_PROG=OFF -DBUILD_SHARED_LIBS=ON -DBUILD_PROG=ON
-cmake --build build --config Release --target install
-cd ..
-
-# git clone --depth=1 https://github.com/tesseract-ocr/tesseract.git
-# git clone https://github.com/tesseract-ocr/tessdata.git tesseract-ocr.tessdata
-# cd tesseract
 ./autogen.sh
 ./configure CXXFLAGS="-Wall -O2" --disable-debug --disable-shared --with-tensorflow -fno-math-errno
 make -j$(nproc)
 # make ScrollView.jar
 make install DESTDIR="$FFBUILD_DESTDIR"
-make install-langs DESTDIR="$FFBUILD_DESTDIR"
+# make install-langs DESTDIR="$FFBUILD_DESTDIR"
 ldconfig
-make training -j$(nproc)
-make install training-install DESTDIR="$FFBUILD_DESTDIR"
-# cd ..
 
-# export TESSDATA_PREFIX="$FFBUILD_DESTDIR"/tessdata
-# mv tessdata $TESSDATA_PREFIX
-  
 }
 
 ffbuild_configure() {
