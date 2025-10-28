@@ -7,7 +7,6 @@
 # SCRIPT_REPO="https://github.com/zups/codec2.git"
 # SCRIPT_COMMIT="371c82ae557f1b033cf4b625be435bb4b88ef70b"
 #
-# some weird megabrain shit. skip
 # 1.086 CMake Error at CMakeLists.txt:29 (zephyr_get_include_directories_for_lang_as_string):
 # 1.086   Unknown CMake command "zephyr_get_include_directories_for_lang_as_string".
 
@@ -15,10 +14,13 @@
 SCRIPT_REPO="https://github.com/rhythmcache/codec2.git"
 SCRIPT_COMMIT="6e0a0e09c065aa5401eb9c30d724240fffe890f1"
 #
-# both want their fucking degenerating cockbooks
 # #56 3.738 CMake Error at src/CMakeLists.txt:72 (message):
 # #56 3.738   Cross-compiling requires
 # #56 3.738   -DGENERATE_CODEBOOK=<path-to-native-generate_codebook>
+#
+# #55 3.723 make[2]: *** No rule to make target 'src/codec2_native/src/generate_codebook', needed by 'src/codebooknewamp2_energy.c'.  Stop.
+# #55 3.725 make[1]: *** [CMakeFiles/Makefile2:226: src/CMakeFiles/codec2.dir/all] Error 2
+# #55 3.725 make[1]: *** Waiting for unfinished jobs....
 
 ffbuild_enabled() {
     [[ $TARGET == win* ]] || return 1
@@ -52,7 +54,7 @@ ffbuild_dockerbuild() {
     mkdir build
     cd build
 
-    cmake -DCMAKE_TOOLCHAIN_FILE="$FFBUILD_CMAKE_TOOLCHAIN" -DGENERATE_CODEBOOK=/50-codec2-test/build/src/codec2_native/src/generate_codebook -DCMAKE_BUILD_TYPE=Release -DUNITTEST=FALSE -DCMAKE_INSTALL_PREFIX="$FFBUILD_PREFIX" -DBUILD_SHARED_LIBS=NO ..
+    cmake -DCMAKE_TOOLCHAIN_FILE="$FFBUILD_CMAKE_TOOLCHAIN" -DGENERATE_CODEBOOK=$FFBUILD_PREFIX/build/codec2_native/src/generate_codebook -DCMAKE_BUILD_TYPE=Release -DUNITTEST=FALSE -DCMAKE_INSTALL_PREFIX="$FFBUILD_PREFIX" -DBUILD_SHARED_LIBS=NO ..
     make -j$(nproc)
     make install DESTDIR="$FFBUILD_DESTDIR"
     
