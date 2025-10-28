@@ -19,9 +19,9 @@ ffbuild_dockerbuild() {
 
 apt-get install -y libzimg-dev intltool \
 libavutil-dev libavcodec-dev libswscale-dev \
-python3-dev Cython
+python3-dev
 
-# pip3 install Cython
+pip3 install Cython
 
     local myconf=(
         --prefix="$FFBUILD_PREFIX"
