@@ -49,11 +49,11 @@ ffbuild_dockerbuild() {
 #    make -j$(nproc)
 #    make install DESTDIR="$FFBUILD_DESTDIR"
 
-    if [[ $VARIANT == *shared* ]]; then
-        mv "$FFBUILD_PREFIX"/lib/libjemalloc{_pic,}.a
-    else
-        rm "$FFBUILD_PREFIX"/lib/libjemalloc_pic.a
-    fi
+ #   if [[ $VARIANT == *shared* ]]; then
+ #       mv "$FFBUILD_PREFIX"/lib/libjemalloc{_pic,}.a
+ #   else
+ #       rm "$FFBUILD_PREFIX"/lib/libjemalloc_pic.a
+ #   fi
 
 }
 
