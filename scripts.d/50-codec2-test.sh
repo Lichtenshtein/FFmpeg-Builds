@@ -4,12 +4,16 @@
 # SCRIPT_COMMIT="96e8a19c2487fd83bd981ce570f257aef42618f9"
 
 # fork repo 1
-SCRIPT_REPO="https://github.com/zups/codec2.git"
-SCRIPT_COMMIT="371c82ae557f1b033cf4b625be435bb4b88ef70b"
+# SCRIPT_REPO="https://github.com/zups/codec2.git"
+# SCRIPT_COMMIT="371c82ae557f1b033cf4b625be435bb4b88ef70b"
+#
+# some weird megabrain shit. skip
+# 1.086 CMake Error at CMakeLists.txt:29 (zephyr_get_include_directories_for_lang_as_string):
+# 1.086   Unknown CMake command "zephyr_get_include_directories_for_lang_as_string".
 
 # fork repo 2
-# SCRIPT_REPO="https://github.com/rhythmcache/codec2.git"
-# SCRIPT_COMMIT="6e0a0e09c065aa5401eb9c30d724240fffe890f1"
+SCRIPT_REPO="https://github.com/rhythmcache/codec2.git"
+SCRIPT_COMMIT="6e0a0e09c065aa5401eb9c30d724240fffe890f1"
 
 
 ffbuild_enabled() {
