@@ -1,7 +1,7 @@
 #!/bin/bash
 
-SCRIPT_REPO="https://github.com/lensfun/lensfun.git"
-SCRIPT_COMMIT="ef7a8498b4b010cd927cf773a710489dcbb5b312"
+SCRIPT_REPO="https://github.com/Lichtenshtein/lensfun.git"
+SCRIPT_COMMIT="60b39ece3464ba6a730e5e7f5f8221e89c9a72c9"
 
 # #229 0.875 -- Looking for include file endian.h - not found
 # #229 0.882 -- Found PkgConfig: /usr/bin/pkg-config (found version "1.8.1") 
@@ -38,6 +38,8 @@ ffbuild_dockerbuild() {
     fi
 
     export CPPFLAGS="$CPPFLAGS -I$FFBUILD_PREFIX/include"
+    CFLAGS += $(pkg-config glib-2.0 --cflags)
+    LDLIBS += $(pkg-config glib-2.0 --libs)
     
     mkdir build
     cd build
