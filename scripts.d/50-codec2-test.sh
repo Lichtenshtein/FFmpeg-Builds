@@ -14,7 +14,11 @@
 # fork repo 2
 SCRIPT_REPO="https://github.com/rhythmcache/codec2.git"
 SCRIPT_COMMIT="6e0a0e09c065aa5401eb9c30d724240fffe890f1"
-
+#
+# both want their fucking degenerating cockbooks
+# #56 3.738 CMake Error at src/CMakeLists.txt:72 (message):
+# #56 3.738   Cross-compiling requires
+# #56 3.738   -DGENERATE_CODEBOOK=<path-to-native-generate_codebook>
 
 ffbuild_enabled() {
     [[ $TARGET == win* ]] || return 1
@@ -48,9 +52,7 @@ ffbuild_dockerbuild() {
     mkdir build
     cd build
 
-# -DGENERATE_CODEBOOK=/50-codec2-test/build/src/codec2_native/src/generate_codebook
-
-    cmake -DCMAKE_TOOLCHAIN_FILE="$FFBUILD_CMAKE_TOOLCHAIN" -DCMAKE_BUILD_TYPE=Release -DUNITTEST=FALSE -DCMAKE_INSTALL_PREFIX="$FFBUILD_PREFIX" -DBUILD_SHARED_LIBS=NO ..
+    cmake -DCMAKE_TOOLCHAIN_FILE="$FFBUILD_CMAKE_TOOLCHAIN" -DGENERATE_CODEBOOK=/50-codec2-test/build/src/codec2_native/src/generate_codebook -DCMAKE_BUILD_TYPE=Release -DUNITTEST=FALSE -DCMAKE_INSTALL_PREFIX="$FFBUILD_PREFIX" -DBUILD_SHARED_LIBS=NO ..
     make -j$(nproc)
     make install DESTDIR="$FFBUILD_DESTDIR"
     
