@@ -28,7 +28,7 @@ libarchive-dev libcurl4-openssl-dev
 # libwebpdemux2 mpg321 pkg-config python3-opencv software-properties-common
 
 # tensflow
-apt-get install -y libprotoc-dev \
+apt-get install -y libprotoc-dev
 pip install tensorflow
 
 
