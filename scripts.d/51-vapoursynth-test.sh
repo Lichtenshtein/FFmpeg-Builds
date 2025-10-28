@@ -9,13 +9,14 @@ ffbuild_enabled() {
 }
 
 # i have no idea what i'm doing
-# vapourfuck. nah.
 
 ffbuild_dockerbuild() {
 
-apt-get install -y libzimg-dev autoconf automake libtool g++ pkg-config build-essential python3-dev unzip 
-apt-get install -y openssl cmake libevent-dev libjpeg-dev libgif-dev libpng-dev libwebp-dev libmagickcore5 libmagickwand5 libmemcached-dev
-pip3 install Cython
+apt-get install -y libzimg-dev devscripts equivs yasm intltool
+apt-get install -y libavutil-dev libavcodec-dev libswscale-dev
+# apt-get install -y openssl cmake libevent-dev libjpeg-dev libgif-dev libpng-dev libwebp-dev libmagickcore5 libmagickwand5 libmemcached-dev
+apt-get install -y python3-dev Cython
+# pip3 install Cython
 
     local myconf=(
         --prefix="$FFBUILD_PREFIX"
