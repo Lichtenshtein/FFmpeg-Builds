@@ -12,6 +12,8 @@ ffbuild_enabled() {
 
 ffbuild_dockerbuild() {
 
+    apt-get install -y libgtk-3-dev libglib2.0-dev
+
     if [[ $TARGET == win* || $TARGET == linux* ]]; then
         myconf+=(
             --host="$FFBUILD_TOOLCHAIN"
