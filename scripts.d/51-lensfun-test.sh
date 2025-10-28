@@ -23,6 +23,7 @@ ffbuild_dockerbuild() {
 #    apt-get install -y libgtk-3-dev
 #    apt-get install -y libglib2.0-dev
 
+# stupid blind fuck can't find glib
 # dpkg -L libglib2.0-dev
 # ldconfig -p | grep libglib
 # ldconfig -p | grep glib
@@ -37,10 +38,10 @@ ffbuild_dockerbuild() {
     fi
 
     export CPPFLAGS="$CPPFLAGS -I$FFBUILD_PREFIX/include"
-
+    
     mkdir build
     cd build
-    cmake -DCMAKE_TOOLCHAIN_FILE="$FFBUILD_CMAKE_TOOLCHAIN" -DGLIB2_ROOT=/lib/x86_64-linux-gnu -DCMAKE_BUILD_TYPE=Release -DINSTALL_HELPER_SCRIPTS=off -DBUILD_TESTS=OFF -DBUILD_DOC=OFF -DBUILD_FOR_SSE2=ON -DCMAKE_INSTALL_PREFIX="$FFBUILD_PREFIX" -DBUILD_STATIC=on -DBUILD_SHARED_LIBS=NO ..
+    cmake -DCMAKE_TOOLCHAIN_FILE="$FFBUILD_CMAKE_TOOLCHAIN" -DCMAKE_LIBRARY_PATH=/usr/lib/x86_64-linux-gnu/glib-2.0 -DCMAKE_PREFIX_PATH=/usr/lib/x86_64-linux-gnu/glib-2.0 -DCMAKE_LIBRARY_PATH=/usr/lib/x86_64-linux-gnu -DCMAKE_PREFIX_PATH=/usr/lib/x86_64-linux-gnu -DCMAKE_BUILD_TYPE=Release -DINSTALL_HELPER_SCRIPTS=off -DBUILD_TESTS=OFF -DBUILD_DOC=OFF -DBUILD_FOR_SSE2=ON -DCMAKE_INSTALL_PREFIX="$FFBUILD_PREFIX" -DBUILD_STATIC=on -DBUILD_SHARED_LIBS=NO ..
     make -j$(nproc)
     make install DESTDIR="$FFBUILD_DESTDIR"
 
