@@ -29,6 +29,8 @@ libarchive-dev libcurl4-openssl-dev
 
 # tensflow
 apt-get install -y libprotoc-dev
+python3 -m venv tensflow
+source tensflow/bin/activate    
 pip install tensorflow
 
 
