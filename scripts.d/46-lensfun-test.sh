@@ -19,6 +19,9 @@ SCRIPT_COMMIT="9b46201746f466614efe573cbc5c3d292dd5633d"
 #229 4.202 [ 13%] Built target python-package
 #229 4.203 make: *** [Makefile:156: all] Error 2
 
+# Build FFmpeg #86
+# doesn't build because of regex errors. skip.
+
 ffbuild_enabled() {
     [[ $TARGET == win* ]] || return 1
     return 0
@@ -31,7 +34,7 @@ ffbuild_dockerbuild() {
 #    apt-get install -y libgtk-3-dev
 #    apt-get install -y libglib2.0-dev libxml2-utils python3-dev
 
-apt-get install -y libpng-dev libsystre 
+apt-get install -y libpng-dev
 
 # stupid blind fuck can't find glib
 # dpkg -L libglib2.0-dev
