@@ -26,6 +26,12 @@ python3.12 -m venv Cython
 source Cython/bin/activate    
 pip install Cython
 
+# again. let's help ourselves find python3.12 for that stupid fuck
+dpkg -L libglib2.0-dev
+ldconfig -p | grep libglib
+ldconfig -p | grep glib
+find / -name "python*.pc" 2>/dev/null
+
     local myconf=(
         --prefix="$FFBUILD_PREFIX"
         --disable-shared
@@ -42,7 +48,8 @@ pip install Cython
     fi
 
     export CPPFLAGS="$CPPFLAGS -I$FFBUILD_PREFIX/include"
-
+#    export PKG_CONFIG_PATH="/usr/lib/x86_64-linux-gnu/pkgconfig:/usr/lib/x86_64-linux-gnu/glib-2.0:/usr/include/glib-2.0:/lib/x86_64-linux-gnu:/usr/lib/x86_64-linux-gnu:/usr/lib/x86_64-linux-gnu/glib-2.0/include:$PKG_CONFIG_PATH"
+    
     ./autogen.sh
     ./configure "${myconf[@]}"
     make -j$(nproc)
