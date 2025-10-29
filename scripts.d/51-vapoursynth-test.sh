@@ -12,16 +12,17 @@ ffbuild_enabled() {
 
 ffbuild_dockerbuild() {
 
-# wtf it this?
+# wtf it this? why i added this?
 # apt-get install -y openssl cmake libevent-dev libjpeg-dev libgif-dev libpng-dev libwebp-dev libmagickcore5 libmagickwand5 libmemcached-dev
 
 # apt-get install -y devscripts equivs 
 
 apt-get install -y libzimg-dev intltool \
 libavutil-dev libavcodec-dev libswscale-dev \
-python3-dev
+python3-dev python3.12 python3.12-venv
 
-python3 -m venv Cython
+# python3 -m venv Cython
+python3.12 -m venv Cython
 source Cython/bin/activate    
 pip install Cython
 
