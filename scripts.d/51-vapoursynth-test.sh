@@ -21,7 +21,7 @@ apt-get install -y libzimg-dev intltool \
 libavutil-dev libavcodec-dev libswscale-dev \
 python3-dev
 
-python -m venv Cython
+python3 -m venv Cython
 source Cython/bin/activate    
 pip install Cython
 
