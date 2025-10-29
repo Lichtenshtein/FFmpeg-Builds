@@ -19,7 +19,7 @@ ffbuild_dockerbuild() {
 
 apt-get install -y libzimg-dev intltool \
 libavutil-dev libavcodec-dev libswscale-dev \
-python3-dev python3.12 python3.12-venv
+python3-dev
 
 # python3 -m venv Cython
 python3.12 -m venv Cython
@@ -27,9 +27,8 @@ source Cython/bin/activate
 pip install Cython
 
 # again. let's help ourselves find python3.12 for that stupid fuck
-dpkg -L libglib2.0-dev
-ldconfig -p | grep libglib
-ldconfig -p | grep glib
+dpkg -L python3.12
+ldconfig -p | grep python3.12
 find / -name "python*.pc" 2>/dev/null
 
     local myconf=(
@@ -48,7 +47,7 @@ find / -name "python*.pc" 2>/dev/null
     fi
 
     export CPPFLAGS="$CPPFLAGS -I$FFBUILD_PREFIX/include"
-#    export PKG_CONFIG_PATH="/usr/lib/x86_64-linux-gnu/pkgconfig:/usr/lib/x86_64-linux-gnu/glib-2.0:/usr/include/glib-2.0:/lib/x86_64-linux-gnu:/usr/lib/x86_64-linux-gnu:/usr/lib/x86_64-linux-gnu/glib-2.0/include:$PKG_CONFIG_PATH"
+    export PKG_CONFIG_PATH="/usr/lib/x86_64-linux-gnu/pkgconfig:/usr/lib/x86_64-linux-gnu/python-3.12:/usr/include/python-3.12:/lib/x86_64-linux-gnu:/usr/lib/x86_64-linux-gnu:/usr/lib/x86_64-linux-gnu/python-3.12/include:$PKG_CONFIG_PATH"
     
     ./autogen.sh
     ./configure "${myconf[@]}"
