@@ -1,7 +1,10 @@
 #!/bin/bash
 
-SCRIPT_REPO="https://github.com/Lichtenshtein/lensfun.git"
-SCRIPT_COMMIT="60b39ece3464ba6a730e5e7f5f8221e89c9a72c9"
+SCRIPT_REPO="https://github.com/lensfun/lensfun.git"
+SCRIPT_COMMIT="101c745e847a5de4a1e569a94368ce2027198598"
+
+# SCRIPT_REPO="https://github.com/Lichtenshtein/lensfun.git"
+# SCRIPT_COMMIT="60b39ece3464ba6a730e5e7f5f8221e89c9a72c9"
 
 # #229 0.875 -- Looking for include file endian.h - not found
 # #229 0.882 -- Found PkgConfig: /usr/bin/pkg-config (found version "1.8.1") 
