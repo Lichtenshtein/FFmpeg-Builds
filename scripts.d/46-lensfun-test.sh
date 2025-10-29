@@ -19,12 +19,12 @@ SCRIPT_COMMIT="9b46201746f466614efe573cbc5c3d292dd5633d"
 #229 4.202 [ 13%] Built target python-package
 #229 4.203 make: *** [Makefile:156: all] Error 2
 
-# Build FFmpeg #86
+# Build FFmpeg #86 attempt
 # doesn't build because of regex errors. skip.
 
 ffbuild_enabled() {
     [[ $TARGET == win* ]] || return 1
-    return 0
+    return -1
 }
 
 # i have no idea what i'm doing
