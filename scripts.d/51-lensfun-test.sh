@@ -40,9 +40,10 @@ apt-get install -y libpng-dev python3-dev libxml2-utils
     fi
 
     export CPPFLAGS="$CPPFLAGS -I$FFBUILD_PREFIX/include"
+    export PKG_CONFIG_PATH="/usr/lib/x86_64-linux-gnu/pkgconfig:/usr/lib/x86_64-linux-gnu/glib-2.0:/usr/include/glib-2.0:/lib/x86_64-linux-gnu:/usr/lib/x86_64-linux-gnu:/usr/lib/x86_64-linux-gnu/glib-2.0/include:$PKG_CONFIG_PATH"
     
 #    CFLAGS += $(pkg-config glib-2.0 --cflags)
-#    LDLIBS += $(pkg-config glib-2.0 --libs)
+    LDLIBS += $(pkg-config glib-2.0 --libs)
     
     mkdir build
     cd build
