@@ -1,7 +1,7 @@
 #!/bin/bash
 
-SCRIPT_REPO="https://github.com/lensfun/lensfun/tree/remove-unused-c-implementations.git"
-SCRIPT_COMMIT="a45f6e0e198d124445dfed069966b435d4ac2bd2"
+SCRIPT_REPO="https://github.com/lensfun/lensfun.git"
+SCRIPT_COMMIT="9b46201746f466614efe573cbc5c3d292dd5633d"
 
 # SCRIPT_REPO="https://github.com/Lichtenshtein/lensfun.git"
 # SCRIPT_COMMIT="60b39ece3464ba6a730e5e7f5f8221e89c9a72c9"
