@@ -1,7 +1,7 @@
 #!/bin/bash
 
 SCRIPT_REPO="https://github.com/vapoursynth/vapoursynth.git"
-SCRIPT_COMMIT="8707cbfdaf2991404e4473b16adf4f7b286431d3"
+SCRIPT_COMMIT="e46204429041e95a881b61eedddd46c08f9a307c"
 
 ffbuild_enabled() {
     [[ $TARGET == win* ]] || return 1
@@ -27,9 +27,9 @@ source Cython/bin/activate
 pip install Cython
 
 # again. let's help ourselves find python3.12 for that stupid fuck
-dpkg -L python3.12
-ldconfig -p | grep python3.12
-find / -name "python*.pc" 2>/dev/null
+# dpkg -L python3.12
+# ldconfig -p | grep python3.12
+# find / -name "python*.pc" 2>/dev/null
 
     local myconf=(
         --prefix="$FFBUILD_PREFIX"
@@ -47,7 +47,7 @@ find / -name "python*.pc" 2>/dev/null
     fi
 
     export CPPFLAGS="$CPPFLAGS -I$FFBUILD_PREFIX/include"
-    export PKG_CONFIG_PATH="/usr/lib/x86_64-linux-gnu/pkgconfig:/usr/lib/x86_64-linux-gnu/python-3.12:/usr/include/python-3.12:/lib/x86_64-linux-gnu:/usr/lib/x86_64-linux-gnu:/usr/lib/x86_64-linux-gnu/python-3.12/include:$PKG_CONFIG_PATH"
+    export PKG_CONFIG_PATH="/lib/x86_64-linux-gnu:/usr/lib/python3.12:/usr/lib/x86_64-linux-gnu/pkgconfig:$PKG_CONFIG_PATH"
     
     ./autogen.sh
     ./configure "${myconf[@]}"
