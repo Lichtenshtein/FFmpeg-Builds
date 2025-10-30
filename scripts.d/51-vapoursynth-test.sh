@@ -136,8 +136,8 @@ pip install Cython
 # dpkg -L python3.12
 # ldconfig -p | grep python3.12
 # find / -name "python*.pc" 2>/dev/null
-find / -name "pyconfig.h" 2>/dev/null
-
+# find / -name "pyconfig.h" 2>/dev/null
+python3.12 -c "from sysconfig import get_paths; print(get_paths()['include'])"
 
     local myconf=(
         --prefix="$FFBUILD_PREFIX"
@@ -154,7 +154,10 @@ find / -name "pyconfig.h" 2>/dev/null
         return -1
     fi
 
-    export CPPFLAGS="$CPPFLAGS -I$FFBUILD_PREFIX/include -I/usr/include/x86_64-linux-gnu"
+
+    export CPLUS_INCLUDE_PATH="$CPLUS_INCLUDE_PATH:/usr/include/x86_64-linux-gnu/python3.12"
+    export C_INCLUDE_PATH="$C_INCLUDE_PATH:/usr/include/x86_64-linux-gnu/python3.12"
+    export CPPFLAGS="$CPPFLAGS -I$FFBUILD_PREFIX/include"
     export PKG_CONFIG_PATH="/lib/x86_64-linux-gnu:/usr/lib/python3.12:/usr/lib/x86_64-linux-gnu/pkgconfig:$PKG_CONFIG_PATH"
     
     ./autogen.sh
