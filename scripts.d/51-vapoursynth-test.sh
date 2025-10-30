@@ -24,7 +24,7 @@ python3-dev
 # python3 -m venv Cython
 python3.12 -m venv Cython
 source Cython/bin/activate    
-pip install Cython3
+pip install Cython
 
 # again. lets help ourselves find python3.12 for that stupid fuck
 # dpkg -L python3.12
