@@ -133,6 +133,7 @@ find / -name "pyconfig.h" 2>/dev/null
     fi
 
 #    export CPPFLAGS="$CPPFLAGS -I$FFBUILD_PREFIX/include"
+    export CPPFLAGS="/usr/include/x86_64-linux-gnu"
     export PKG_CONFIG_PATH="/lib/x86_64-linux-gnu:/usr/lib/python3.12:/usr/lib/x86_64-linux-gnu/pkgconfig:$PKG_CONFIG_PATH"
     
     ./autogen.sh
