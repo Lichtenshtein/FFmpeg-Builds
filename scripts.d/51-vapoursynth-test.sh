@@ -116,33 +116,34 @@ ffbuild_enabled() {
 #229 43.07 configure: error: C compiler cannot create executables
 #229 43.07 See `config.log' for more details
 
+# Build FFmpeg #98 attempt
+# same error as in №93. my clue is that C wants python shit from /usr/include/x86_64-linux-gnu/python3.12/
+# but digs in /usr/include/python3.12/. don't know how to point it to right location.
+# python3.12 -c "from sysconfig import get_paths; print(get_paths()['include'])"
+# #229 20.33 /usr/include/python3.12
+
 ffbuild_dockerbuild() {
-
-# wtf it this? why i added this?
-# apt-get install -y openssl cmake libevent-dev libjpeg-dev libgif-dev libpng-dev libwebp-dev libmagickcore5 libmagickwand5 libmemcached-dev
-
-# apt-get install -y devscripts equivs 
 
 apt-get install -y libzimg-dev intltool \
 libavutil-dev libavcodec-dev libswscale-dev \
 python3-dev
 
-# python3 -m venv Cython
 python3.12 -m venv Cython
 source Cython/bin/activate    
 pip install Cython
 
-# again. lets help ourselves find python3.12 for that stupid fuck
+# again. lets find python3.12 for that stupid fuck
 # dpkg -L python3.12
 # ldconfig -p | grep python3.12
 # find / -name "python*.pc" 2>/dev/null
 # find / -name "pyconfig.h" 2>/dev/null
-python3.12 -c "from sysconfig import get_paths; print(get_paths()['include'])"
+# python3.12 -c "from sysconfig import get_paths; print(get_paths()['include'])"
 
     local myconf=(
         --prefix="$FFBUILD_PREFIX"
         --disable-shared
         --enable-static
+        --cross-compile-prefix="$FFBUILD_CROSS_PREFIX"
     )
 
     if [[ $TARGET == win* || $TARGET == linux* ]]; then
@@ -155,9 +156,15 @@ python3.12 -c "from sysconfig import get_paths; print(get_paths()['include'])"
     fi
 
 
-    export CPLUS_INCLUDE_PATH="$CPLUS_INCLUDE_PATH:/usr/include/x86_64-linux-gnu/python3.12"
-    export C_INCLUDE_PATH="$C_INCLUDE_PATH:/usr/include/x86_64-linux-gnu/python3.12"
-    export CPPFLAGS="$CPPFLAGS -I$FFBUILD_PREFIX/include"
+    export CC="${CC/${FFBUILD_CROSS_PREFIX}/}"
+    export CXX="${CXX/${FFBUILD_CROSS_PREFIX}/}"
+    export CFLAGS="$RAW_CFLAGS"
+    export LDFLAFS="$RAW_LDFLAGS"
+    
+#    export CPLUS_INCLUDE_PATH="$CPLUS_INCLUDE_PATH:/usr/include/x86_64-linux-gnu/python3.12"
+#    export C_INCLUDE_PATH="$C_INCLUDE_PATH:/usr/include/x86_64-linux-gnu/python3.12"
+#    export CPPFLAGS="$CPPFLAGS -I$FFBUILD_PREFIX/include"
+    export CPPFLAGS="$CPPFLAGS -I$FFBUILD_PREFIX/include/x86_64-linux-gnu"
     export PKG_CONFIG_PATH="/lib/x86_64-linux-gnu:/usr/lib/python3.12:/usr/lib/x86_64-linux-gnu/pkgconfig:$PKG_CONFIG_PATH"
     
     ./autogen.sh
