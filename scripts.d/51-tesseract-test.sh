@@ -42,6 +42,7 @@ export TESSDATA_PREFIX=".\tessdata"
 
 dpkg -L libleptonica-dev
 ldconfig -p | grep libleptonica-dev
+pkg-config --variable pc_path pkg-config
 
 export CPLUS_INCLUDE_PATH="$CPLUS_INCLUDE_PATH:/usr/include/leptonica"
 export C_INCLUDE_PATH="$C_INCLUDE_PATH:/usr/include/leptonica"
