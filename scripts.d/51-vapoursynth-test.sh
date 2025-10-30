@@ -169,8 +169,12 @@ find / -name "features.h" 2>/dev/null
     export C_INCLUDE_PATH="$C_INCLUDE_PATH:/usr/include/x86_64-linux-gnu/python3.12"
     export CPLUS_INCLUDE_PATH="$CPLUS_INCLUDE_PATH:/usr/include/x86_64-linux-gnu"
     export C_INCLUDE_PATH="$C_INCLUDE_PATH:/usr/include/x86_64-linux-gnu"
-#    export CPPFLAGS="$CPPFLAGS -I$FFBUILD_PREFIX/include"
-#    export CPPFLAGS="$CPPFLAGS -I$FFBUILD_PREFIX/include/x86_64-linux-gnu"
+    export CPLUS_INCLUDE_PATH="$CPLUS_INCLUDE_PATH:/usr/include/x86_64-linux-gnu/bits/platform"
+    export C_INCLUDE_PATH="$C_INCLUDE_PATH:/usr/include/x86_64-linux-gnu/bits/platform"
+    export CPLUS_INCLUDE_PATH="$CPLUS_INCLUDE_PATH:/opt/ct-ng/x86_64-w64-mingw32/include/c++/13.2.0/parallel"
+    export C_INCLUDE_PATH="$C_INCLUDE_PATH:/opt/ct-ng/x86_64-w64-mingw32/include/c++/13.2.0/parallel"
+    export CPPFLAGS="$CPPFLAGS -I$FFBUILD_PREFIX/include"
+    export CPPFLAGS="$CPPFLAGS -I$FFBUILD_PREFIX/include/x86_64-linux-gnu"
     export PKG_CONFIG_PATH="/usr/include/x86_64-linux-gnu/python3.12:/usr/include/x86_64-linux-gnu:/lib/x86_64-linux-gnu:/usr/lib/python3.12:/usr/lib/x86_64-linux-gnu/pkgconfig:$PKG_CONFIG_PATH"
     
     ./autogen.sh
