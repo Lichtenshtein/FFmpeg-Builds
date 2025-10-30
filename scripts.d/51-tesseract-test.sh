@@ -41,8 +41,7 @@ export TESSDATA_PREFIX=".\tessdata"
 # --disable-openmp --disable-shared 'CXXFLAGS=-g -O2 -fno-math-errno -Wall -Wextra -Wpedantic'
 
 ./autogen.sh
-./configure --help
-./configure CXXFLAGS="-Wall -O2" --disable-debug --disable-shared --with-tensorflow
+./configure CXXFLAGS="-Wall -O2" --disable-debug --disable-shared --with-tensorflow --host="$FFBUILD_TOOLCHAIN" --prefix="$FFBUILD_PREFIX"
 make -j$(nproc)
 # make ScrollView.jar
 make install DESTDIR="$FFBUILD_DESTDIR"
