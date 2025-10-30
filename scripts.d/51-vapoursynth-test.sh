@@ -118,9 +118,14 @@ ffbuild_enabled() {
 
 # Build FFmpeg #98 attempt
 # same error as in №93. my clue is that C wants python shit from /usr/include/x86_64-linux-gnu/python3.12/
-# but digs in /usr/include/python3.12/. don't know how to point it to right location.
+# but digs in /usr/include/python3.12/. don't know how to point it to right location. let's try ln
 # python3.12 -c "from sysconfig import get_paths; print(get_paths()['include'])"
 # #229 20.33 /usr/include/python3.12
+
+# Build FFmpeg #102 attempt
+# can't resolve the c can't find python headers problem.
+# 229 34.91 /usr/include/x86_64-linux-gnu/sys/timeb.h:21:10: fatal error: features.h: No such file or directory
+# stupid ass shit cross compilation
 
 ffbuild_dockerbuild() {
 
@@ -137,6 +142,7 @@ pip install Cython
 # ldconfig -p | grep python3.12
 # find / -name "python*.pc" 2>/dev/null
 # find / -name "pyconfig.h" 2>/dev/null
+find / -name "features.h" 2>/dev/null
 # python3.12 -c "from sysconfig import get_paths; print(get_paths()['include'])"
 
     local myconf=(
