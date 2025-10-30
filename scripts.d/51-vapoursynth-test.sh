@@ -143,7 +143,6 @@ pip install Cython
         --prefix="$FFBUILD_PREFIX"
         --disable-shared
         --enable-static
-        --cross-compile-prefix="$FFBUILD_CROSS_PREFIX"
     )
 
     if [[ $TARGET == win* || $TARGET == linux* ]]; then
