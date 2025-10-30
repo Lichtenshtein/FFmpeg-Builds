@@ -155,17 +155,16 @@ pip install Cython
         return -1
     fi
 
+    # why not
+    ln -s /usr/include/x86_64-linux-gnu/python3.12 /usr/include/python3.12
 
-    export CC="${CC/${FFBUILD_CROSS_PREFIX}/}"
-    export CXX="${CXX/${FFBUILD_CROSS_PREFIX}/}"
-    export CFLAGS="$RAW_CFLAGS"
-    export LDFLAFS="$RAW_LDFLAGS"
-    
-#    export CPLUS_INCLUDE_PATH="$CPLUS_INCLUDE_PATH:/usr/include/x86_64-linux-gnu/python3.12"
-#    export C_INCLUDE_PATH="$C_INCLUDE_PATH:/usr/include/x86_64-linux-gnu/python3.12"
-#    export CPPFLAGS="$CPPFLAGS -I$FFBUILD_PREFIX/include"
-    export CPPFLAGS="$CPPFLAGS -I$FFBUILD_PREFIX/include/x86_64-linux-gnu"
-    export PKG_CONFIG_PATH="/lib/x86_64-linux-gnu:/usr/lib/python3.12:/usr/lib/x86_64-linux-gnu/pkgconfig:$PKG_CONFIG_PATH"
+    export CPLUS_INCLUDE_PATH="$CPLUS_INCLUDE_PATH:/usr/include/x86_64-linux-gnu/python3.12"
+    export C_INCLUDE_PATH="$C_INCLUDE_PATH:/usr/include/x86_64-linux-gnu/python3.12"
+    export CPLUS_INCLUDE_PATH="$CPLUS_INCLUDE_PATH:/usr/include/x86_64-linux-gnu"
+    export C_INCLUDE_PATH="$C_INCLUDE_PATH:/usr/include/x86_64-linux-gnu"
+    export CPPFLAGS="$CPPFLAGS -I$FFBUILD_PREFIX/include"
+#    export CPPFLAGS="$CPPFLAGS -I$FFBUILD_PREFIX/include/x86_64-linux-gnu"
+    export PKG_CONFIG_PATH="/usr/include/x86_64-linux-gnu/python3.12:/usr/include/x86_64-linux-gnu:/lib/x86_64-linux-gnu:/usr/lib/python3.12:/usr/lib/x86_64-linux-gnu/pkgconfig:$PKG_CONFIG_PATH"
     
     ./autogen.sh
     ./configure "${myconf[@]}"
