@@ -40,14 +40,14 @@ export TESSDATA_PREFIX=".\tessdata"
 # costraited 'release build' flags
 # --disable-openmp --disable-shared 'CXXFLAGS=-g -O2 -fno-math-errno -Wall -Wextra -Wpedantic'
 
-dpkg -L libleptonica-dev
-ldconfig -p | grep libleptonica-dev
-pkg-config --variable pc_path pkg-config
+# dpkg -L libleptonica-dev
+# ldconfig -p | grep libleptonica-dev
+# pkg-config --variable pc_path pkg-config
 
 export CPLUS_INCLUDE_PATH="$CPLUS_INCLUDE_PATH:/usr/include/leptonica"
 export C_INCLUDE_PATH="$C_INCLUDE_PATH:/usr/include/leptonica"
 export CPPFLAGS="$CPPFLAGS -I$FFBUILD_PREFIX/include"
-export PKG_CONFIG_PATH="/usr/include/leptonica/pkgconfig:$PKG_CONFIG_PATH"
+export PKG_CONFIG_PATH="/usr/lib/x86_64-linux-gnu/pkgconfig:$PKG_CONFIG_PATH"
 
 ./autogen.sh
 ./configure CXXFLAGS="-Wall -O2" --disable-debug --disable-shared --with-tensorflow --host="$FFBUILD_TOOLCHAIN" --prefix="$FFBUILD_PREFIX"
