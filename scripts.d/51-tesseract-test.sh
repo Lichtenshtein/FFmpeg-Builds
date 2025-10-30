@@ -40,6 +40,9 @@ export TESSDATA_PREFIX=".\tessdata"
 # costraited 'release build' flags
 # --disable-openmp --disable-shared 'CXXFLAGS=-g -O2 -fno-math-errno -Wall -Wextra -Wpedantic'
 
+export CPPFLAGS="$CPPFLAGS -I$FFBUILD_PREFIX/include"
+# export PKG_CONFIG_PATH="/path/to/leptonica/lib/pkgconfig:$PKG_CONFIG_PATH"
+
 ./autogen.sh
 ./configure CXXFLAGS="-Wall -O2" --disable-debug --disable-shared --with-tensorflow --host="$FFBUILD_TOOLCHAIN" --prefix="$FFBUILD_PREFIX"
 make -j$(nproc)
