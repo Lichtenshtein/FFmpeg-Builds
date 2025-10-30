@@ -43,8 +43,10 @@ export TESSDATA_PREFIX=".\tessdata"
 dpkg -L libleptonica-dev
 ldconfig -p | grep libleptonica-dev
 
+export CPLUS_INCLUDE_PATH="$CPLUS_INCLUDE_PATH:/usr/include/leptonica"
+export C_INCLUDE_PATH="$C_INCLUDE_PATH:/usr/include/leptonica"
 export CPPFLAGS="$CPPFLAGS -I$FFBUILD_PREFIX/include"
-export PKG_CONFIG_PATH="/path/to/leptonica/lib/pkgconfig:$PKG_CONFIG_PATH"
+export PKG_CONFIG_PATH="/usr/include/leptonica/pkgconfig:$PKG_CONFIG_PATH"
 
 ./autogen.sh
 ./configure CXXFLAGS="-Wall -O2" --disable-debug --disable-shared --with-tensorflow --host="$FFBUILD_TOOLCHAIN" --prefix="$FFBUILD_PREFIX"
