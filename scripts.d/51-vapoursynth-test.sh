@@ -122,8 +122,8 @@ ffbuild_enabled() {
 # python3.12 -c "from sysconfig import get_paths; print(get_paths()['include'])"
 # #229 20.33 /usr/include/python3.12
 
-# Build FFmpeg #102 attempt
-# can't resolve the c can't find python headers problem.
+# Build FFmpeg #105 attempt
+# can't resolve the headers problem.
 # 229 34.91 /usr/include/x86_64-linux-gnu/sys/timeb.h:21:10: fatal error: features.h: No such file or directory
 # stupid ass shit cross compilation
 
@@ -142,7 +142,7 @@ pip install Cython
 # ldconfig -p | grep python3.12
 # find / -name "python*.pc" 2>/dev/null
 # find / -name "pyconfig.h" 2>/dev/null
-find / -name "features.h" 2>/dev/null
+# find / -name "features.h" 2>/dev/null
 # python3.12 -c "from sysconfig import get_paths; print(get_paths()['include'])"
 
     local myconf=(
@@ -161,9 +161,9 @@ find / -name "features.h" 2>/dev/null
     fi
 
     # why not
-    mv /usr/include/python3.12 /usr/include/python3.12-12
-    mkdir /usr/include/python3.12
-    ln -s /usr/include/x86_64-linux-gnu/python3.12 /usr/include/python3.12
+#    mv /usr/include/python3.12 /usr/include/python3.12-12
+#    mkdir /usr/include/python3.12
+#    ln -s /usr/include/x86_64-linux-gnu/python3.12 /usr/include/python3.12
 
     export CPLUS_INCLUDE_PATH="$CPLUS_INCLUDE_PATH:/usr/include/x86_64-linux-gnu/python3.12"
     export C_INCLUDE_PATH="$C_INCLUDE_PATH:/usr/include/x86_64-linux-gnu/python3.12"
@@ -172,8 +172,8 @@ find / -name "features.h" 2>/dev/null
 #    export CPLUS_INCLUDE_PATH="$CPLUS_INCLUDE_PATH:/opt/ct-ng/x86_64-w64-mingw32/include/c++/13.2.0/parallel"
 #    export C_INCLUDE_PATH="$C_INCLUDE_PATH:/opt/ct-ng/x86_64-w64-mingw32/include/c++/13.2.0/parallel"
     export CPPFLAGS="$CPPFLAGS -I$FFBUILD_PREFIX/include"
-    export CPPFLAGS="$CPPFLAGS -I$FFBUILD_PREFIX/include/x86_64-linux-gnu"
-    export PKG_CONFIG_PATH="/usr/include/x86_64-linux-gnu/python3.12:/usr/include/x86_64-linux-gnu:/lib/x86_64-linux-gnu:/usr/lib/python3.12:/usr/lib/x86_64-linux-gnu/pkgconfig:$PKG_CONFIG_PATH"
+#    export CPPFLAGS="$CPPFLAGS -I$FFBUILD_PREFIX/include/x86_64-linux-gnu"
+    export PKG_CONFIG_PATH="/usr/include/x86_64-linux-gnu/python3.12:/usr/include/x86_64-linux-gnu:/usr/lib/x86_64-linux-gnu/pkgconfig:$PKG_CONFIG_PATH"
     
     ./autogen.sh
     ./configure "${myconf[@]}"
