@@ -10,29 +10,8 @@ ffbuild_enabled() {
 
 # i have no idea what i'm doing
 
-ffbuild_dockerbuild() {
-
-# wtf it this? why i added this?
-# apt-get install -y openssl cmake libevent-dev libjpeg-dev libgif-dev libpng-dev libwebp-dev libmagickcore5 libmagickwand5 libmemcached-dev
-
-# apt-get install -y devscripts equivs 
-
-apt-get install -y libzimg-dev intltool \
-libavutil-dev libavcodec-dev libswscale-dev \
-python3-dev
-
-# python3 -m venv Cython
-python3.12 -m venv Cython
-source Cython/bin/activate    
-pip install Cython
-
-# again. lets help ourselves find python3.12 for that stupid fuck
-# dpkg -L python3.12
-# ldconfig -p | grep python3.12
-# find / -name "python*.pc" 2>/dev/null
-find / -name "pyconfig.h" 2>/dev/null
-
 # ERROR. ERROR. ERROR.
+# Build FFmpeg #93 attempt
 #229 45.74 + make -j4
 #229 45.76   CXX      src/core/libvapoursynth_la-lutfilters.lo
 #229 45.76   CXX      src/core/libvapoursynth_la-memoryuse.lo
@@ -117,6 +96,49 @@ find / -name "pyconfig.h" 2>/dev/null
 #229 62.53 compilation terminated.
 #229 62.53 make: *** [Makefile:1262: src/vsscript/libvapoursynth_script_la-vsscript.lo] Error 1
 
+# Build FFmpeg #96 attempt
+#229 42.86 + ./configure --prefix=/opt/ffbuild --disable-shared --enable-static --host=x86_64-w64-mingw32
+#229 42.94 checking for a BSD-compatible install... /usr/bin/install -c
+#229 42.95 checking whether build environment is sane... yes
+#229 42.96 checking for x86_64-w64-mingw32-strip... x86_64-w64-mingw32-strip
+#229 42.96 checking for a race-free mkdir -p... /usr/bin/mkdir -p
+#229 42.96 checking for gawk... gawk
+#229 42.96 checking whether make sets $(MAKE)... yes
+#229 42.97 checking whether make supports nested variables... yes
+#229 42.98 checking whether make supports nested variables... (cached) yes
+#229 42.98 checking build system type... x86_64-pc-linux-gnu
+#229 43.01 checking host system type... x86_64-w64-mingw32
+#229 43.02 checking how to print strings... printf
+#229 43.02 checking whether make supports the include directive... yes (GNU style)
+#229 43.02 checking for x86_64-w64-mingw32-gcc... x86_64-w64-mingw32-gcc
+#229 43.05 checking whether the C compiler works... no
+#229 43.07 configure: error: in `/51-vapoursynth-test':
+#229 43.07 configure: error: C compiler cannot create executables
+#229 43.07 See `config.log' for more details
+
+ffbuild_dockerbuild() {
+
+# wtf it this? why i added this?
+# apt-get install -y openssl cmake libevent-dev libjpeg-dev libgif-dev libpng-dev libwebp-dev libmagickcore5 libmagickwand5 libmemcached-dev
+
+# apt-get install -y devscripts equivs 
+
+apt-get install -y libzimg-dev intltool \
+libavutil-dev libavcodec-dev libswscale-dev \
+python3-dev
+
+# python3 -m venv Cython
+python3.12 -m venv Cython
+source Cython/bin/activate    
+pip install Cython
+
+# again. lets help ourselves find python3.12 for that stupid fuck
+# dpkg -L python3.12
+# ldconfig -p | grep python3.12
+# find / -name "python*.pc" 2>/dev/null
+find / -name "pyconfig.h" 2>/dev/null
+
+
     local myconf=(
         --prefix="$FFBUILD_PREFIX"
         --disable-shared
@@ -132,8 +154,7 @@ find / -name "pyconfig.h" 2>/dev/null
         return -1
     fi
 
-#    export CPPFLAGS="$CPPFLAGS -I$FFBUILD_PREFIX/include"
-    export CPPFLAGS="/usr/include/x86_64-linux-gnu"
+    export CPPFLAGS="$CPPFLAGS -I$FFBUILD_PREFIX/include -I/usr/include/x86_64-linux-gnu"
     export PKG_CONFIG_PATH="/lib/x86_64-linux-gnu:/usr/lib/python3.12:/usr/lib/x86_64-linux-gnu/pkgconfig:$PKG_CONFIG_PATH"
     
     ./autogen.sh
