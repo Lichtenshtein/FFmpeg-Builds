@@ -5,7 +5,7 @@ SCRIPT_COMMIT="e46204429041e95a881b61eedddd46c08f9a307c"
 
 ffbuild_enabled() {
     [[ $TARGET == win* ]] || return 1
-    return 0
+    return -1
 }
 
 # i have no idea what i'm doing
@@ -125,7 +125,24 @@ ffbuild_enabled() {
 # Build FFmpeg #105 attempt
 # can't resolve the headers problem.
 # 229 34.91 /usr/include/x86_64-linux-gnu/sys/timeb.h:21:10: fatal error: features.h: No such file or directory
-# stupid ass shit cross compilation
+
+# Build FFmpeg #106 attempt
+# i'm giving up, i don't know how to solve this problem...
+#229 27.39 make: *** [Makefile:1346: src/core/libvapoursynth_la-lutfilters.lo] Error 1
+#229 27.39 make: *** [Makefile:1367: src/core/libvapoursynth_la-reorderfilters.lo] Error 1
+#229 27.39 In file included from /opt/ct-ng/x86_64-w64-mingw32/sysroot/mingw/include/pthread.h:64,
+#229 27.39                  from /opt/ct-ng/x86_64-w64-mingw32/include/c++/13.2.0/x86_64-w64-mingw32/bits/gthr-default.h:35,
+#229 27.39                  from /opt/ct-ng/x86_64-w64-mingw32/include/c++/13.2.0/x86_64-w64-mingw32/bits/gthr.h:148,
+#229 27.39                  from /opt/ct-ng/x86_64-w64-mingw32/include/c++/13.2.0/ext/atomicity.h:35,
+#229 27.39                  from /opt/ct-ng/x86_64-w64-mingw32/include/c++/13.2.0/bits/shared_ptr_base.h:61,
+#229 27.39                  from /opt/ct-ng/x86_64-w64-mingw32/include/c++/13.2.0/bits/shared_ptr.h:53,
+#229 27.39                  from /opt/ct-ng/x86_64-w64-mingw32/include/c++/13.2.0/memory:80,
+#229 27.39                  from src/core/mergefilters.cpp:23:
+#229 27.39 /usr/include/x86_64-linux-gnu/sys/types.h:25:10: fatal error: features.h: No such file or directory
+#229 27.39    25 | #include <features.h>
+#229 27.39       |          ^~~~~~~~~~~~
+#229 27.39 compilation terminated.
+#229 27.40 make: *** [Makefile:1360: src/core/libvapoursynth_la-mergefilters.lo] Error 1
 
 ffbuild_dockerbuild() {
 
