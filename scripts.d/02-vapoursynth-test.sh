@@ -154,12 +154,14 @@ python3.12 -m venv Cython
 source Cython/bin/activate    
 pip install Cython
 
-# again. lets find python3.12 for that stupid fuck
-# dpkg -L python3.12
-# ldconfig -p | grep python3.12
-# find / -name "python*.pc" 2>/dev/null
-# find / -name "pyconfig.h" 2>/dev/null
-# find / -name "features.h" 2>/dev/null
+# again. lets find python3.12
+dpkg -L python3.12
+ldconfig -p | grep python3.12
+find / -name "python*.pc" 2>/dev/null
+find / -name "pyconfig.h" 2>/dev/null
+find / -name "features.h" 2>/dev/null
+find / -name "archive.h" 2>/dev/null
+pkg-config --variable pc_path pkg-config
 # python3.12 -c "from sysconfig import get_paths; print(get_paths()['include'])"
 
     local myconf=(
