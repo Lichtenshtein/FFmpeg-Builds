@@ -156,7 +156,7 @@ pip install Cython
 
 # again. lets find python3.12
 dpkg -L python3.12
-ldconfig -p | grep python3.12
+pkg-config --variable pc_path pkg-config
 find / -name "python*.pc" 2>/dev/null
 find / -name "pyconfig.h" 2>/dev/null
 find / -name "features.h" 2>/dev/null
