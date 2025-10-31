@@ -42,7 +42,6 @@ export TESSDATA_PREFIX=".\tessdata"
 
 dpkg -L libleptonica-dev
 ldconfig -p | grep libleptonica-dev
-pkg-config --variable pc_path pkg-config
 find / -name "features.h" 2>/dev/null
 find / -name "archive.h" 2>/dev/null
 
