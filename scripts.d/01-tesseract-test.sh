@@ -41,7 +41,7 @@ export TESSDATA_PREFIX=".\tessdata"
 # --disable-openmp --disable-shared 'CXXFLAGS=-g -O2 -fno-math-errno -Wall -Wextra -Wpedantic'
 
 dpkg -L libleptonica-dev
-ldconfig -p | grep libleptonica-dev
+pkg-config --variable pc_path pkg-config
 find / -name "features.h" 2>/dev/null
 find / -name "archive.h" 2>/dev/null
 
