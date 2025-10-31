@@ -68,10 +68,8 @@ pkg-config --variable pc_path pkg-config
 find / -name "features.h" 2>/dev/null
 find / -name "archive.h" 2>/dev/null
 
-export CPLUS_INCLUDE_PATH="$CPLUS_INCLUDE_PATH:/usr/include/leptonica"
-export C_INCLUDE_PATH="$C_INCLUDE_PATH:/usr/include/leptonica"
-export CPPFLAGS="$CPPFLAGS -I$FFBUILD_PREFIX/include -I$FFBUILD_PREFIX/include/x86_64-linux-gnu -I/usr/include/x86_64-linux-gnu"
-# export CPPFLAGS="$CPPFLAGS -I$FFBUILD_PREFIX/include"
+# export CPPFLAGS="$CPPFLAGS -I$FFBUILD_PREFIX/include -I$FFBUILD_PREFIX/include/x86_64-linux-gnu -I/usr/include/x86_64-linux-gnu"
+export CPPFLAGS="$CPPFLAGS -I$FFBUILD_PREFIX/include"
 export PKG_CONFIG_PATH="/usr/lib/x86_64-linux-gnu/pkgconfig:$PKG_CONFIG_PATH"
 
 # export LEPTONICA_CFLAGS="/usr/include/leptonica:$LEPTONICA_CFLAGS"
