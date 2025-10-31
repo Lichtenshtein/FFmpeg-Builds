@@ -161,7 +161,6 @@ find / -name "python*.pc" 2>/dev/null
 find / -name "pyconfig.h" 2>/dev/null
 find / -name "features.h" 2>/dev/null
 find / -name "archive.h" 2>/dev/null
-pkg-config --variable pc_path pkg-config
 # python3.12 -c "from sysconfig import get_paths; print(get_paths()['include'])"
 
     local myconf=(
