@@ -33,6 +33,34 @@ ffbuild_enabled() {
 #10 50.47 make: *** [Makefile:7990: all-recursive] Error 1
 #10 ERROR: process "/bin/sh -c run_stage /stage.sh" did not complete successfully: exit code: 2
 
+# can't resolve finding headers errors
+#10 55.60 In file included from /opt/ct-ng/x86_64-w64-mingw32/sysroot/mingw/include/pthread.h:64,
+#10 55.60                  from /opt/ct-ng/x86_64-w64-mingw32/include/c++/13.2.0/x86_64-w64-mingw32/bits/gthr-default.h:35,
+#10 55.60                  from /opt/ct-ng/x86_64-w64-mingw32/include/c++/13.2.0/x86_64-w64-mingw32/bits/gthr.h:148,
+#10 55.60                  from /opt/ct-ng/x86_64-w64-mingw32/include/c++/13.2.0/ext/atomicity.h:35,
+#10 55.60                  from /opt/ct-ng/x86_64-w64-mingw32/include/c++/13.2.0/bits/ios_base.h:39,
+#10 55.60                  from /opt/ct-ng/x86_64-w64-mingw32/include/c++/13.2.0/ios:44,
+#10 55.60                  from /opt/ct-ng/x86_64-w64-mingw32/include/c++/13.2.0/ostream:40,
+#10 55.60                  from /opt/ct-ng/x86_64-w64-mingw32/include/c++/13.2.0/bits/unique_ptr.h:42,
+#10 55.60                  from /opt/ct-ng/x86_64-w64-mingw32/include/c++/13.2.0/memory:78,
+#10 55.60                  from ./src/viewer/scrollview.h:39,
+#10 55.60                  from ./src/ccstruct/rect.h:23,
+#10 55.60                  from ./src/ccstruct/boxword.h:22,
+#10 55.60                  from src/api/baseapi.cpp:26:
+#10 55.60 /usr/include/x86_64-linux-gnu/sys/types.h:25:10: fatal error: features.h: No such file or directory
+#10 55.60    25 | #include <features.h>
+#10 55.60       |          ^~~~~~~~~~~~
+#10 55.60 compilation terminated.
+#10 55.60 make[1]: *** [Makefile:4942: src/api/libtesseract_la-baseapi.lo] Error 1
+#10 55.60 make[1]: *** Waiting for unfinished jobs....
+#10 55.76 src/tesseract.cpp:47:12: fatal error: archive.h: No such file or directory
+#10 55.76    47 | #  include <archive.h>
+#10 55.76       |            ^~~~~~~~~~~
+#10 55.76 compilation terminated.
+#10 55.76 make[1]: *** [Makefile:7609: src/tesseract-tesseract.o] Error 1
+#10 55.76 make[1]: Leaving directory '/01-tesseract-test'
+#10 55.76 make: *** [Makefile:7990: all-recursive] Error 1
+
 ffbuild_dockerbuild() {
 
 # main
