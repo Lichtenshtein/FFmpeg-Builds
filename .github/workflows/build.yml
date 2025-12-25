@@ -1,52 +1,33 @@
 name: Build FFmpeg
 
 on:
-  push:
-    paths-ignore:
-      - '**.md'
-      - 'LICENSE'
   workflow_dispatch:
-    inputs:
-      doRelease:
-        description: 'Publish new release'
-        type: boolean
-        default: false
-        required: false
-      buildOnly:
-        description: 'Only build ffmpeg'
-        type: boolean
-        default: false
-        required: false
-  schedule:
-    - cron: '0 12 * * *'
+#    inputs:
+#      doRelease:
+#        description: 'Publish new release'
+#        type: boolean
+#        default: false
+#        required: false
+#      buildOnly:
+#        description: 'Only build ffmpeg'
+#        type: boolean
+#        default: false
+#        required: false
 
 env:
-  DOCKER_BUILDKIT: 1
+  DOCKER_BUILDKIT: 0
 
 jobs:
-  pre_check:
-    name: Pre Checks
-    if: ${{ github.event.inputs.buildOnly != 'true' }}
-    runs-on: ubuntu-latest
-    steps:
-      - name: Repo Check
-        run: |
-          if [[ "$GITHUB_REPOSITORY" != "MartinEesmaa/FFmpeg-Builds" ]]; then
-            echo "When forking this repository to make your own builds, you have to adjust this check."
-            echo "When doing so make sure to randomize the scheduled cron time above, in order to spread out the various build times as much as possible."
-            echo "This has been put in place due to the enormous amounts of traffic hundreds/thousands of parallel builds can cause on external infrastructure."
-            exit 1
-          fi
-          exit 0
   build_base:
     name: Build base image
-    if: ${{ github.event.inputs.buildOnly != 'true' }}
-    needs: pre_check
     strategy:
       fail-fast: false
       matrix:
-        runner: [ubuntu-latest,ubuntu-24.04-arm]
+        runner: [ubuntu-latest]
+#        runner: [ubuntu-latest,ubuntu-24.04-arm]
     runs-on: ${{ matrix.runner }}
+    permissions:
+      packages: write
     steps:
       - name: Free Disk-Space
         run: df -h && sudo apt-get clean && docker system prune -a -f && sudo rm -rf /opt/ghc /usr/local/.ghcup /usr/local/lib/android && df -h
@@ -56,7 +37,6 @@ jobs:
         uses: docker/setup-buildx-action@v3
         with:
           buildkitd-config: .github/buildkit.toml
-          driver-opts: image=ghcr.io/btbn/buildkit:master
       - name: Login to Docker
         uses: docker/login-action@v3
         with:
@@ -67,7 +47,7 @@ jobs:
         id: imagename
         run: |
           IMG="${GITHUB_REPOSITORY,,}/base"
-          IMG="${IMG/ /-}"
+          IMG="${IMG// /-}"
           echo "name=ghcr.io/${IMG}" >> $GITHUB_OUTPUT
           echo "rawname=${IMG#*/}" >> $GITHUB_OUTPUT
       - name: Stop Commands
@@ -109,25 +89,19 @@ jobs:
           name: download-cache
           overwrite: true
           path: .cache/cache.tar.gz
-      - name: Cleanup
-        continue-on-error: true
-        uses: BtbN/delete-untagged-ghcr-action@main
-        with:
-          token: ${{ github.token }}
-          package_name: ${{ steps.imagename.outputs.rawname }}
-          repository_owner: ${{ github.repository_owner }}
-          repository: ${{ github.repository }}
-          owner_type: user
-          untagged_only: true
   build_target_bases:
     name: Build target base image
     if: ${{ github.event.inputs.buildOnly != 'true' }}
     needs: build_base
     runs-on: ubuntu-latest
+    permissions:
+      packages: write
     strategy:
       fail-fast: false
       matrix:
-        target: [win32,win64,winarm64,linux32,linux64,linuxarm64]
+        target:
+          - win64
+#        target: [win32,win64,winarm64,linux32,linux64,linuxarm64]
     steps:
       - name: Free Disk-Space
         run: df -h && sudo apt-get clean && docker system prune -a -f && sudo rm -rf /opt/ghc /usr/local/.ghcup /usr/local/lib/android && df -h
@@ -137,7 +111,6 @@ jobs:
         uses: docker/setup-buildx-action@v3
         with:
           buildkitd-config: .github/buildkit.toml
-          driver-opts: image=ghcr.io/btbn/buildkit:master
       - name: Login to Docker
         uses: docker/login-action@v3
         with:
@@ -148,7 +121,7 @@ jobs:
         id: imagename
         run: |
           IMG="${GITHUB_REPOSITORY,,}/base-${{ matrix.target }}"
-          IMG="${IMG/ /-}"
+          IMG="${IMG// /-}"
           echo "name=ghcr.io/${IMG}" >> $GITHUB_OUTPUT
           echo "rawname=${IMG#*/}" >> $GITHUB_OUTPUT
           echo "gh_repo=${GITHUB_REPOSITORY,,}" >> $GITHUB_OUTPUT
@@ -166,26 +139,22 @@ jobs:
           cache-from: type=registry,ref=${{ steps.imagename.outputs.name }}:cache
           build-args: |
             GH_REPO=ghcr.io/${{ steps.imagename.outputs.gh_repo }}
-      - name: Cleanup
-        continue-on-error: true
-        uses: BtbN/delete-untagged-ghcr-action@main
-        with:
-          token: ${{ github.token }}
-          package_name: ${{ steps.imagename.outputs.rawname }}
-          repository_owner: ${{ github.repository_owner }}
-          repository: ${{ github.repository }}
-          owner_type: user
-          untagged_only: true
   build_targets:
     name: Build target-variant image
     if: ${{ github.event.inputs.buildOnly != 'true' }}
     needs: build_target_bases
     runs-on: ubuntu-latest
+    permissions:
+      packages: write
     strategy:
       fail-fast: false
       matrix:
-        target: [win64,winarm64,linux64,linuxarm64,win32]
-        variant: [nonfree,nonfree-shared]
+        target:
+          - win64
+        variant:
+          - nonfree
+#        target: [win64,winarm64,linux64,linuxarm64,win32]
+#        variant: [nonfree,nonfree-shared]
     steps:
       - name: Free Disk-Space
         run: df -h && sudo apt-get clean && docker system prune -a -f && sudo rm -rf /opt/ghc /usr/local/.ghcup /usr/local/lib/android && df -h
@@ -195,7 +164,6 @@ jobs:
         uses: docker/setup-buildx-action@v3
         with:
           buildkitd-config: .github/buildkit.toml
-          driver-opts: image=ghcr.io/btbn/buildkit:master
       - name: Login to Docker
         uses: docker/login-action@v3
         with:
@@ -206,7 +174,7 @@ jobs:
         id: imagename
         run: |
           IMG="${GITHUB_REPOSITORY,,}/${{ matrix.target }}-${{ matrix.variant }}"
-          IMG="${IMG/ /-}"
+          IMG="${IMG// /-}"
           echo "name=ghcr.io/${IMG}" >> $GITHUB_OUTPUT
           echo "rawname=${IMG#*/}" >> $GITHUB_OUTPUT
       - name: Get download cache key
@@ -233,26 +201,21 @@ jobs:
           tags: ${{ steps.imagename.outputs.name }}:latest
           cache-to: type=registry,mode=max,ref=${{ steps.imagename.outputs.name }}:cache
           cache-from: type=registry,ref=${{ steps.imagename.outputs.name }}:cache
-      - name: Cleanup
-        continue-on-error: true
-        uses: BtbN/delete-untagged-ghcr-action@main
-        with:
-          token: ${{ github.token }}
-          package_name: ${{ steps.imagename.outputs.rawname }}
-          repository_owner: ${{ github.repository_owner }}
-          repository: ${{ github.repository }}
-          owner_type: user
-          untagged_only: true
   build_ffmpeg:
     name: Build ffmpeg
-    if: ${{ ( github.event.inputs.buildOnly == 'true' && !cancelled() ) || success() }}
     needs: build_targets
     runs-on: ubuntu-latest
+    permissions:
+      packages: read
     strategy:
       fail-fast: false
       matrix:
-        target: [win64,winarm64,linux64,linuxarm64,win32]
-        variant: [nonfree,nonfree-shared]
+        target:
+          - win64
+        variant:
+          - nonfree
+#        target: [win64,winarm64,linux64,linuxarm64,win32]
+#        variant: [nonfree,nonfree-shared]
     steps:
       - name: Free Disk-Space
         run: df -h && sudo apt-get clean && docker system prune -a -f && sudo rm -rf /opt/ghc /usr/local/.ghcup /usr/local/lib/android && df -h
@@ -281,12 +244,12 @@ jobs:
           path: artifacts/*
   publish_release:
     name: Publish release
-    if: ${{ !cancelled() && ( github.event_name == 'schedule' || github.event.inputs.doRelease == 'true' ) && needs.build_ffmpeg.result == 'success' }}
+    if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags/')
     needs: build_ffmpeg
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     steps:
-      - name: Free Disk-Space
-        run: df -h && sudo apt-get clean && docker system prune -a -f && sudo rm -rf /opt/ghc /usr/local/.ghcup /usr/local/lib/android && df -h
       - name: Checkout
         uses: actions/checkout@v4
       - name: Download artifacts
@@ -303,27 +266,9 @@ jobs:
           RELDATE="$(date +'%Y-%m-%d %H:%M')"
           NAME="Auto-Build $RELDATE"
           TAGNAME="autobuild-$(date +'%Y-%m-%d-%H-%M')"
-          (cd artifacts && sha256sum *.{zip,tar.xz} > checksums.sha256)
-          gh release create "$TAGNAME" --target "master" --title "$NAME" artifacts/*.{zip,tar.xz} artifacts/checksums.*
+          (cd artifacts && sha256sum *.{7z} > checksums.sha256)
+          gh release create "$TAGNAME" --target "master" --title "$NAME" artifacts/*.{7z} artifacts/checksums.*
           echo "tag_name=${TAGNAME}" >> $GITHUB_OUTPUT
           echo "rel_date=${RELDATE}" >> $GITHUB_OUTPUT
-        env:
-          GITHUB_TOKEN: ${{ github.token }}
-      - name: Update Latest
-        run: |
-          set -xe
-          shopt -s nullglob
-          mkdir latest_artifacts
-          ./util/repack_latest.sh latest_artifacts artifacts/*.{zip,tar.xz}
-          (cd latest_artifacts && sha256sum *.{zip,tar.xz} > checksums.sha256)
-          NAME="Latest Auto-Build (${{ steps.create_release.outputs.rel_date }})"
-          TAGNAME="latest"
-          gh release delete --cleanup-tag --yes "$TAGNAME" || true
-          sleep 15
-          gh release create "$TAGNAME" --target "master" --title "$NAME" latest_artifacts/*
-        env:
-          GITHUB_TOKEN: ${{ github.token }}
-      - name: Update Wiki
-        run: ./util/update_wiki.sh artifacts ${{ steps.create_release.outputs.tag_name }}
         env:
           GITHUB_TOKEN: ${{ github.token }}
