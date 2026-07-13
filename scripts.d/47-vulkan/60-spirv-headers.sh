@@ -5,6 +5,7 @@ SCRIPT_COMMIT="02c0394e57af6dfdda7f68973df6aa20fc3f5def"
 
 ffbuild_enabled() {
     (( $(ffbuild_ffver) > 404 )) || return -1
+    (( $(ffbuild_ffver) <= 900 )) || return -1
     return 0
 }
 
