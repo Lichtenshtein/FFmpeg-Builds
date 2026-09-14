@@ -12,7 +12,7 @@ index 748b641c3c..8fb554461d 100755
 --- a/configure
 +++ b/configure
 @@ -5212,6 +5212,7 @@ msvc_common_flags(){
-             -lz)                  echo zlib.lib ;;
+             -lz)                  echo ${zlib_msvc_lib:-zlib.lib} ;;
              -lx264)               echo libx264.lib ;;
              -lstdc++)             ;;
 +            -libpath:*|-LIBPATH:*)echo $flag ;;

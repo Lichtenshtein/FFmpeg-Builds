@@ -22,7 +22,7 @@ index 97a29d8..2e16a5a 100644
          return AVERROR_EXTERNAL;
  
 @@ -163,7 +163,14 @@ static int lcevc_send_frame(FFLCEVCFrame *frame_ctx, const AVFrame *in)
-         return AVERROR(ENOMEM);
+         goto end;
      }
  
 -    res = LCEVC_SendDecoderBase(lcevc->decoder, in->pts, 0, picture, -1, opaque);

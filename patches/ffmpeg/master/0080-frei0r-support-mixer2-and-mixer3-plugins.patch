@@ -46,9 +46,9 @@ index 03bf51d3fd..861c80482a 100644
  OBJS-$(CONFIG_FREEZEFRAMES_FILTER)           += vf_freezeframes.o
 -OBJS-$(CONFIG_FREI0R_FILTER)                 += vf_frei0r.o
 +OBJS-$(CONFIG_FREI0R_FILTER)                 += vf_frei0r.o framesync.o
+ OBJS-$(CONFIG_FRUC_VULKAN_FILTER)            += vf_fruc_vulkan.o vulkan.o vulkan_filter.o
  OBJS-$(CONFIG_FSPP_FILTER)                   += vf_fspp.o vf_fsppdsp.o qp_table.o
  OBJS-$(CONFIG_FSYNC_FILTER)                  += vf_fsync.o
- OBJS-$(CONFIG_GBLUR_FILTER)                  += vf_gblur.o
 diff --git a/libavfilter/vf_frei0r.c b/libavfilter/vf_frei0r.c
 index 722d6dca92..a3bbd2ba43 100644
 --- a/libavfilter/vf_frei0r.c
