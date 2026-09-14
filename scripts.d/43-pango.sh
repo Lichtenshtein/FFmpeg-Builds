@@ -24,6 +24,9 @@ ffbuild_dockerdl() {
 ffbuild_dockerbuild() {
     set -e
 
+    # Fixes Werror failure on clang
+    sed -i "/^\s*'-Werror=unused-but-set-variable'.*$/d" meson.build
+
     mkdir -p build && cd build
 
     local myconf=(

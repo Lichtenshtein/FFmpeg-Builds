@@ -134,6 +134,9 @@ EOF
         sed -i '/g_clear_object (&classes_root);/i \skip_registry_scan:' "$GWIN32_APPINFO"
     fi
 
+    # Skip auto-initialization of GIO appinfo. It's relatively expensive and automatically done on demand when needed.
+    sed -zi 's/[^\n]*gio_win32_appinfo_init[^\n]*\n//g; t; q1' gio/giomodule.c
+
     mkdir -p _build
 
     local myconf=(

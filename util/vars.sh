@@ -601,6 +601,9 @@ pkg_config_static = $( [[ "$PREFER_SHARED" == "1" ]] && echo "false" || echo "tr
 needs_exe_wrapper = $( [[ "$USE_WINE" == "1" ]] && echo "false" || echo "true" )
 sys_root = '/'
 pkg_config_libdir = '${PKG_CONFIG_LIBDIR}'
+have_c99_vsnprintf = true
+have_c99_snprintf = true
+$( [[ "$TARGET" != "win64" ]] && echo "have_unix98_printf = true" )
 
 [built-in options]
 # flags can be passed like this globally, but passed individially

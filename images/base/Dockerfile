@@ -15,7 +15,7 @@ RUN \
     apt-get -y install --no-install-recommends \
         ca-certificates curl gnupg build-essential yasm nasm pv ccache \
         xxd pkgconf wget unzip zip git subversion rsync jq bc \
-        autoconf automake libtool libtool-bin gettext qemu-user \
+        autoconf automake libtool libtool-bin libltdl-dev libarchive-tools gettext qemu-user \
         texinfo texi2html help2man flex bison groff pkg-config \
         gperf itstool ragel autopoint parallel binutils pax-utils file \
         gtk-doc-tools gobject-introspection gawk procps \

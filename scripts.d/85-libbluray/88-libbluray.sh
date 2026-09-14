@@ -26,6 +26,9 @@ ffbuild_dockerdl() {
 ffbuild_dockerbuild() {
     set -e
 
+    # libssp is gone from a lot of toolchains, and part of the runtime automatically
+    sed -i "/'ssp'/d" meson.build
+
     # # Replace basic string handling utilities to avoid collisions during static linking
     # log_info "Patching conflicting string functions in source tree..."
     # find . -type f \( -name "*.c" -o -name "*.h" -o -name "meson.build" \) -exec sed -i \

@@ -15,6 +15,11 @@ ffbuild_dockerdl() {
 ffbuild_dockerbuild() {
     set -e
 
+    # Force the SSP initialization to happen with the highest priorits.
+    # Otherwise other static initializers might run before it, and crash.
+    # Relies on the toolchain not providing its own libssp.
+    sed -zi 's/__constructor__\s*)/__constructor__(0))/g; t; q1' mingw-w64-crt/ssp/stack_chk_guard.c
+
     # Use the toolchain's internal sysroot as the target, but install to a temp dir first
     local SYSROOT=$(${CC} -print-sysroot)
 

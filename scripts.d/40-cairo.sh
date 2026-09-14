@@ -31,6 +31,8 @@ ffbuild_dockerbuild() {
     # fix error: implicit declaration of function '_hypot'
     sed -i 's/#define hypot _hypot/\/\/#define hypot _hypot/' src/cairo-compiler-private.h
 
+    sed -i 's/__attribute__((__visibility__("default")))//' src/cairo.h
+
     # Remove gnu_symbol_visibility from all meson.builds
     # if [ -f "src/cairo.h" ]; then
         # sed -i 's/# define _cairo_export __attribute__((__visibility__("default")))/# define _cairo_export/g' src/cairo.h
