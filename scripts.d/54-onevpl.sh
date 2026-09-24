@@ -19,6 +19,8 @@ doc/images"
 ffbuild_dockerbuild() {
     set -e
 
+    curl -fL https://github.com/intel/libvpl/pull/198.patch | git am
+
     mkdir build && cd build
 
     local myconf=(
