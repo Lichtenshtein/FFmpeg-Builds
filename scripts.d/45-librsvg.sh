@@ -30,6 +30,8 @@ rsvg/tests/resources"
 ffbuild_dockerbuild() {
     set -e
 
+    sed -i -e "/'PKG_CONFIG_ALL_STATIC'/d" -e "/'SYSTEM_DEPS_LINK'/d" meson.build
+
     if [ -f "Cargo.toml" ]; then
         NEW_RELEASE_PROFILE="[profile.release]
 debug = false
@@ -43,6 +45,7 @@ codegen-units = 1"
         fi
     fi
 
+    export CARGO_NET_OFFLINE=true
     export CARGO_HOME="/opt/cargo"
     export RUSTUP_HOME="/opt/rustup"
     export PKG_CONFIG_ALLOW_CROSS=1
